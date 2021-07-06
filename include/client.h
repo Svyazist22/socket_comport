@@ -27,5 +27,5 @@ public:
     /**
      * @brief Отправляет данные client. Принимает подтвеждение от client
      */
-    static void client_write();
+    static void client_write(char* str);
 };

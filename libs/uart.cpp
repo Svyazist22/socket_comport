@@ -99,7 +99,5 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
         logg.err("Write error!");
     }
 
-     
-
 }
 
