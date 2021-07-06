@@ -31,9 +31,10 @@ public:
     static void serv_init();
 
     /**
-     * @brief Прослушивание client. Отправляет echo клиенту
+     * @brief Прослушивание client
+     * @return char* Возвращает указатель на полученное сообщение
      */
-    static void serv_read();
+    char* serv_read();
     
 };
 

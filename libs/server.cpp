@@ -60,9 +60,9 @@ void Server::serv_init()
     }
 }
 
-void Server::serv_read()
+char* Server::serv_read()
 {
-    char buf[256];
+    char *buf = new char;
     ssize_t nread;
 
     /*!
@@ -80,21 +80,24 @@ void Server::serv_read()
     */
 
     //Слшушаем что передает клиент
-    nread = read(accept_serv,&buf,256);
+    nread = read(accept_serv,buf,256);
     if (nread < 0)
     {
         logger.err("Error read");
         exit(0);
     }
+    /*
     if (nread > 0)
     {
         logger.info("%s",buf);
-        write(accept_serv,&buf,nread);
+        write(accept_serv,buf,nread);
     }
+    */
     
     sleep(1);
     close(sd);
     close(listen_serv);
+    return buf;
 }
 
 

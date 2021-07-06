@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string.h>
 
-Logger logger;
+Logger logg;
 
 
 void Uart::uart_init(int fd){
@@ -52,7 +52,7 @@ void Uart::uart_init(int fd){
 
     if (tcsetattr(fd, TCSANOW, &term) < 0)
     {
-        logger.err("Unable to set port parameters");     
+        logg.err("Unable to set port parameters");     
     }
     
 }
@@ -77,14 +77,14 @@ void Uart::uart_receive(int fd, fifo_t buf)
         }
         else
         {
-            logger.info("%s", str);
+            logg.info("%s", str);
             if (fifo_free(&buf)>63) // Запись в буффер
             {
                 fifo_write_push(&buf,&str,64);
             }
             else
             {
-                logger.warn("The buffer is full");
+                logg.warn("The buffer is full");
             }
             memset(str,0,sizeof(str));
             i=0;
@@ -96,7 +96,7 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
 {
     if (write(fd,str,size) == -1)
     {
-        logger.err("Write error!");
+        logg.err("Write error!");
     }
 
      

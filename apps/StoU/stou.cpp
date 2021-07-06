@@ -9,15 +9,37 @@
 
 #include "../../include/stou.h"
 
+#include <iostream>
+#include <fcntl.h>
+
 int main(int argc, char const *argv[])
 {
     Server serv;
     Uart uart;
+    Logger log;
+
+    char* buf = new char;
+
+    int fd = open("/dev/ttyUSB0",O_RDWR| O_NONBLOCK | O_NDELAY );
+    if ( fd < 0 )
+    {
+        log.err("Open /dev/ttyUSB0 ERROR");
+        return 0;
+    }
 
     serv.serv_init();
-    serv.serv_read();
+    uart.uart_init(fd);
+    buf = serv.serv_read();
+    log.info("READ:%s",buf);
+    uart.uart_transmit(fd,"Hello",5);
+
+
+
+
 
     
+
+
     
     return 0;
 }

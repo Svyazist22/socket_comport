@@ -30,7 +30,12 @@ public:
      */
     void uart_receive(int fd,fifo_t buf);
 
-
+    /**
+     * @brief Отправляет данные на UART
+     * @param fd file descriptor ("/dev/ttyUSB0")
+     * @param str Сообщение
+     * @param size Размер сообщения
+     */
     void uart_transmit(int fd, char* str,size_t size);
  
 };
