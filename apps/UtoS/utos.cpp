@@ -10,17 +10,31 @@
 #include "../../include/utos.h"
 
 #include <iostream>
+#include <fcntl.h>
 
 int main(int argc, char const *argv[])
 {
-    char *str = new char;
+    Logger log;
+
+    int fd = open("/dev/ttyUSB0",O_RDWR| O_NONBLOCK | O_NDELAY );
+    if ( fd < 0 )
+    {
+        log.err("Open /dev/ttyUSB0 ERROR");
+        return 0;
+    }
+
+    char *str = new char; // Команда с консоли
+    char *buf = new char; // Сообщение с компорта
     Client cl;
+    Uart uart;
 
     cl.client_init();
+    uart.uart_init(fd);
     
     printf("Write command:");
     std::cin.getline(str,32);
     cl.client_write(str);
+    //uart.uart_receive(fd,buf);
 
 
 
