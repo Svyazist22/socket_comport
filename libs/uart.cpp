@@ -18,39 +18,25 @@ Logger logg;
 
 void Uart::uart_init(int fd){
 
-    struct termios term;
+    struct termios tty;
     
-    tcgetattr(fd,&term);        // Получение стандартных настроек
+    tcgetattr(fd,&tty);        // Получение стандартных настроек
 
-    cfsetspeed(&term, B9600);   // Скорость приема и передачи
+    cfsetspeed(&tty, B9600);   // Скорость приема и передачи
 
-    term.c_cflag &= ~PARENB;    // Бит четности выключен
-    term.c_cflag &= ~CSTOPB;    // Стоп бит один
-    
-    term.c_cflag &= ~CSIZE;     // Очистить маску размера сообщения
-    term.c_cflag |=  CS8;       // Сообщение 8 бит
+    tty.c_cflag     &=  ~PARENB;            // Бит четности выключен
+    tty.c_cflag     &=  ~CSTOPB;            // Стоп бит один
+    tty.c_cflag     &=  ~CSIZE;             // Очистить маску размера сообщения
+    tty.c_cflag     |=  CS8;                // Сообщение 8 бит
 
-    term.c_cflag &= ~CRTSCTS;   // Отключить аппаратное управление потоком RTS / CTS
+    tty.c_cflag     &=  ~CRTSCTS;           // Отключить аппаратное управление потоком RTS / CTS
+    tty.c_cc[VMIN]   =  1;                  // read doesn't block
+    tty.c_cc[VTIME]  =  5;                  // 0.5 seconds read timeout
+    tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
 
-    term.c_lflag &= ~ICANON;    // Неканонический режим
+    cfmakeraw(&tty);
 
-    term.c_lflag &= ~ECHO;      // Выключить echo
-    term.c_lflag &= ~ECHOE;     // Выключить  erasure
-    term.c_lflag &= ~ECHONL;    // Выключить new-line echo
-
-    term.c_lflag &= ~ISIG;      // Отключить интерпретацию INTR, QUIT и SUSP
-
-    term.c_iflag &= ~(IXON | IXOFF | IXANY); // Turn off s/w flow ctrl
-
-    term.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL); // Отключаем любую специальную обработку полученных байтов
-
-    term.c_oflag &= ~OPOST; // Предотвращаем специальную интерпретацию выходных байтов (например, символы новой строки)
-    term.c_oflag &= ~ONLCR; // Запретить преобразование новой строки в возврат каретки / перевод строки
-    
-    term.c_cc[VMIN] = 40;       // Ожидание 40 символов
-    term.c_cc[VTIME] = 30;      // Ожидание 3 секунды
-
-    if (tcsetattr(fd, TCSANOW, &term) < 0)
+    if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
         logg.err("Unable to set port parameters");     
     }
@@ -60,36 +46,23 @@ void Uart::uart_init(int fd){
 
 void Uart::uart_receive(int fd, fifo_t buf)
 {
-    char read_buffer[10];
-    char str[64];
-    int bytes_read;
-    int i = 0;
-    bool rw;
-    memset(str,0,sizeof(str)); 
+    int n = 0;
+    int num = 0;
+    char response[1024];
+    memset(response, '\0', sizeof(response));
+    char symbol = '\0';
+    do {
+        n = read(fd, &symbol, 1);
+        sprintf(&response[num], "%c", symbol);
+        num += n;
+    } while( symbol != '\r' && n > 0);
 
-    while (1)
+    if (strlen(response)>0)
     {
-        bytes_read = read(fd,&read_buffer,1); 
-        if (read_buffer[0] != '\a') 
-        {
-            str[i]=read_buffer[0];
-            i++;
-        }
-        else
-        {
-            logg.info("%s", str);
-            if (fifo_free(&buf)>63) // Запись в буффер
-            {
-                fifo_write_push(&buf,&str,64);
-            }
-            else
-            {
-                logg.warn("The buffer is full");
-            }
-            memset(str,0,sizeof(str));
-            i=0;
-        }  
+        logg.err(response);
     }
+
+    
 }
 
 void Uart::uart_transmit(int fd, char* str,size_t size)

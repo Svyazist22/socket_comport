@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <fcntl.h>
+#include <unistd.h>
 
 int main(int argc, char const *argv[])
 {
@@ -22,18 +23,21 @@ int main(int argc, char const *argv[])
         log.err("Open /dev/ttyUSB0 ERROR");
         return 0;
     }
-
+    fifo_t fbuf;
     char *str = new char; // Команда с консоли
     char *buf = new char; // Сообщение с компорта
     Client cl;
     Uart uart;
 
-    cl.client_init();
+    //cl.client_init();
     uart.uart_init(fd);
-    
-    printf("Write command:");
-    std::cin.getline(str,32);
-    cl.client_write(str);
+    uart.uart_transmit(fd,"Test programm",strlen("Test programm"));
+    sleep(1);
+    //uart.uart_transmit(fd,"Test programm",strlen("Test programm"));
+    uart.uart_receive(fd,fbuf);
+    //printf("Write command:");
+    //std::cin.getline(str,32);
+    //cl.client_write(str);
     //uart.uart_receive(fd,buf);
 
 
