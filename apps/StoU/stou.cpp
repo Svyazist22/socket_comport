@@ -11,6 +11,10 @@
 
 int main(int argc, char const *argv[])
 {
+    Server serv;
+    
+    serv.serv_init();
+    serv.serv_read();
     
     
     return 0;

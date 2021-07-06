@@ -11,6 +11,9 @@
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+    Client cl;
+    cl.client_init();
+    cl.client_write();
+
     return 0;
 }
