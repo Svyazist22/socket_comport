@@ -30,8 +30,8 @@ int main(int argc, char const *argv[])
     serv.serv_init();
     uart.uart_init(fd);
     buf = serv.serv_read();
-    log.info("READ:%s",buf);
-    uart.uart_transmit(fd,"Hello",5);
+    log.info("Message received:%s",buf);
+    uart.uart_transmit(fd,buf,strlen(buf));
 
 
 
