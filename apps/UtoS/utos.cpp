@@ -29,16 +29,23 @@ int main(int argc, char const *argv[])
     Client cl;
     Uart uart;
 
-    //cl.client_init();
+    cl.client_init();
     uart.uart_init(fd);
-    uart.uart_transmit(fd,"Test programm",strlen("Test programm"));
-    sleep(1);
+
     //uart.uart_transmit(fd,"Test programm",strlen("Test programm"));
+    //sleep(1);
+    //uart.uart_receive(fd,fbuf);
+
+    // Вводим команду и отправляем на компорт
+    printf("Write command:");
+    std::cin.getline(str,32);
+    cl.client_write(str);
+
+
+    sleep(1);
+
+    // Слушаем компорт
     uart.uart_receive(fd,fbuf);
-    //printf("Write command:");
-    //std::cin.getline(str,32);
-    //cl.client_write(str);
-    //uart.uart_receive(fd,buf);
 
 
 

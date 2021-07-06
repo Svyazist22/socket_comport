@@ -4,7 +4,6 @@
  * @brief Слушает сокет, отправляет полученные данные на UART
  * @version 0.1
  * @date 2021-07-06
- * @warning ШАБЛОН. Сейчас работает как server
  */
 
 #include "../../include/stou.h"
@@ -27,13 +26,18 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    char pr[32];
-    serv.serv_init();
-    uart.uart_init(fd);
-    buf = serv.serv_read();
-    log.info("Message received:%s",buf);
-    uart.uart_transmit(fd,buf,strlen(buf));
+    //Инициализация сервера (АРМ)
+    serv.serv_init(); 
 
+    //Инициализация компорта
+    uart.uart_init(fd); 
+
+    // Получаем сообщение от клиента (софт)
+    buf = serv.serv_read(); 
+    log.info("Message received:%s",buf); 
+
+    //Отправляем на компорт
+    uart.uart_transmit(fd,buf,strlen(buf)); 
 
     return 0;
 }

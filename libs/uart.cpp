@@ -51,6 +51,7 @@ void Uart::uart_receive(int fd, fifo_t buf)
     char response[1024];
     memset(response, '\0', sizeof(response));
     char symbol = '\0';
+    while (read(fd, &symbol, 1)<1);
     do {
         n = read(fd, &symbol, 1);
         sprintf(&response[num], "%c", symbol);
@@ -59,7 +60,7 @@ void Uart::uart_receive(int fd, fifo_t buf)
 
     if (strlen(response)>0)
     {
-        logg.err(response);
+        logg.err("Message received:%s",response);
     }
 
     
