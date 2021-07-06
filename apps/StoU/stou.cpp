@@ -12,9 +12,11 @@
 int main(int argc, char const *argv[])
 {
     Server serv;
-    
+    Uart uart;
+
     serv.serv_init();
     serv.serv_read();
+
     
     
     return 0;

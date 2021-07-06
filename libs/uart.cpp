@@ -16,7 +16,7 @@
 Logger logger;
 
 
-void uart_init(int fd){
+void Uart::uart_init(int fd){
 
     struct termios term;
     
@@ -58,7 +58,7 @@ void uart_init(int fd){
 }
 
 
-void uart_receive(int fd, fifo_t buf)
+void Uart::uart_receive(int fd, fifo_t buf)
 {
     char read_buffer[10];
     char str[64];
@@ -90,5 +90,16 @@ void uart_receive(int fd, fifo_t buf)
             i=0;
         }  
     }
+}
+
+void Uart::uart_transmit(int fd, char* str,size_t size)
+{
+    if (write(fd,str,size) == -1)
+    {
+        logger.err("Write error!");
+    }
+
+     
+
 }
 
