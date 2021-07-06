@@ -27,6 +27,7 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
+    char pr[32];
     serv.serv_init();
     uart.uart_init(fd);
     buf = serv.serv_read();
@@ -34,12 +35,5 @@ int main(int argc, char const *argv[])
     uart.uart_transmit(fd,buf,strlen(buf));
 
 
-
-
-
-    
-
-
-    
     return 0;
 }

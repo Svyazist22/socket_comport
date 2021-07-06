@@ -86,13 +86,13 @@ char* Server::serv_read()
         logger.err("Error read");
         exit(0);
     }
-    /*
+    
     if (nread > 0)
     {
         logger.info("%s",buf);
         write(accept_serv,buf,nread);
     }
-    */
+    
     
     sleep(1);
     close(sd);
