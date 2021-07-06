@@ -1,7 +1,7 @@
 
 #include "../include/crypt.h"
 
-void create_hash(char *msg, size_t len, char *hex) 
+void get_hash(char *msg, size_t len, char *hex) 
    {
       int i;
       int j;
@@ -40,6 +40,7 @@ void create_hash(char *msg, size_t len, char *hex)
       sprintf(hex,"%x%x%x%x%x%x%x%x\n",
          hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);
    }
+
 
 char* XORCipher(char* data, char* key, int dataLen, int keyLen) {
 	char* output = (char*)malloc(sizeof(char) * dataLen);

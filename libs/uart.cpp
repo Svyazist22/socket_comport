@@ -70,7 +70,7 @@ void uart_receive(int fd, fifo_t buf)
     while (1)
     {
         bytes_read = read(fd,&read_buffer,1); 
-        if (read_buffer[0] != '\a')
+        if (read_buffer[0] != '\a') 
         {
             str[i]=read_buffer[0];
             i++;
@@ -78,7 +78,7 @@ void uart_receive(int fd, fifo_t buf)
         else
         {
             logger.info("%s", str);
-            if (fifo_free(&buf)>63)
+            if (fifo_free(&buf)>63) // Запись в буффер
             {
                 fifo_write_push(&buf,&str,64);
             }

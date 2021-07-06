@@ -1,12 +1,9 @@
 /**
  * @file crypt.h
- * @author Vlad Bakanov
+ * @author Vladislav Bakanov
  * @brief Простое шифрование xor и получения хэша
  * @version 0.1
  * @date 2021-07-02
- * 
- * @copyright Copyright (c) 2021
- * 
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +14,7 @@
  * @param len Длина сообщения
  * @param hex Куда записывается хэш (размер хэша 8 байт)
  */
-void create_hash(char *msg, size_t len, char *hex);
+void get_hash(char *msg, size_t len, char *hex);
 
 /**
  * @brief Шифрование XOR

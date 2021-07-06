@@ -1,4 +1,4 @@
-#include "../../include/server.h"
+#include "../include/server.h"
 
 #include <sys/socket.h>
 #include <sys/types.h>  
@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <iostream>
 
 Logger logger;
 
@@ -17,6 +18,7 @@ int Server::accept_serv;
 
 void Server::serv_init()
 {
+    // Создаем сокет сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
     {
@@ -26,7 +28,8 @@ void Server::serv_init()
     
     struct sockaddr_in serv_addr = {0};
     serv_addr.sin_family = AF_INET; 
-    serv_addr.sin_port = htons(34543);
+    // serv_addr.sin_addr.s_addr = inet_addr("");
+    serv_addr.sin_port = htons(PORT); //порт 64300
 
     // Связываем сокет с конкретным адресом
     bind_serv = bind(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)); 
@@ -95,11 +98,3 @@ void Server::serv_read()
 }
 
 
-int main(int argc, char const *argv[])
-{
-    Server server;
-    server.serv_init();
-    server.serv_read();
-
-    return 0;
-}

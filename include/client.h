@@ -1,6 +1,6 @@
 /**
  * @file client.h
- * @author Vlad Bakanov
+ * @author Vladislav Bakanov
  * @brief Socket client
  * @version 0.1
  * @date 2021-06-29

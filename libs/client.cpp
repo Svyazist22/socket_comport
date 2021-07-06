@@ -1,4 +1,4 @@
-#include "../../include/client.h"
+#include "../include/client.h"
 
 #include <sys/socket.h>
 #include <sys/types.h>  
@@ -15,6 +15,7 @@ int Client::connect_client;
 
 void Client::client_init()
 {
+    // Создаем сокет сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
     {
@@ -56,14 +57,6 @@ void Client::client_write()
 
 
 
-int main(int argc, char const *argv[])
-{
-    Client client;
 
-    client.client_init();
-    client.client_write();
-
-    return 0;
-}
 
 

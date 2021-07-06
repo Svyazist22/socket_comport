@@ -1,6 +1,6 @@
 /**
  * @file server.h
- * @author Vlad Bakanov
+ * @author Vladislav Bakanov
  * @brief Socket server
  * @version 0.1
  * @date 2021-06-29
@@ -9,6 +9,8 @@
 #include "logger.h"
 
 #pragma once
+
+#define PORT 64300
 
 class Server
 {
@@ -32,6 +34,7 @@ public:
      * @brief Прослушивание client. Отправляет echo клиенту
      */
     static void serv_read();
+    
 };
 
 
