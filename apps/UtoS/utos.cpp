@@ -15,12 +15,14 @@ int main(int argc, char const *argv[])
 {
     char *str = new char;
     Client cl;
+
     cl.client_init();
     
-
     printf("Write command:");
     std::cin.getline(str,32);
     cl.client_write(str);
+
+
 
 
     return 0;

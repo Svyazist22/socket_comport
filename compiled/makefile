@@ -13,8 +13,8 @@ all: utos stou
 stou: stou.o server.o logger.o uart.o fifo.o
 	g++ stou.o logger.o server.o uart.o fifo.o -o stou
 
-utos: utos.o client.o logger.o
-	g++ utos.o client.o logger.o -o utos
+utos: utos.o client.o logger.o uart.o fifo.o
+	g++ utos.o client.o logger.o uart.o fifo.o -o utos
 
 
 stou.o: $(STOU)stou.cpp $(LIBS)server.cpp $(LIBS)uart.cpp
