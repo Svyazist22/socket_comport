@@ -33,13 +33,12 @@ int main(int argc, char const *argv[])
     //Инициализация компорта
     uart.uart_init(fd); 
 
-    while(1){
-        // Получаем сообщение от клиента (софт)
-        buf = serv.serv_read(); 
+    while(1)
+    {
+        buf = serv.serv_read();                 // Получаем сообщение от клиента (софт)
         log.info("Message received:%s",buf); 
         
-        //Отправляем на компорт
-        uart.uart_transmit(fd,buf,strlen(buf)); 
+        uart.uart_transmit(fd,buf,strlen(buf)); //Отправляем на компорт
     }
     
     return 0;

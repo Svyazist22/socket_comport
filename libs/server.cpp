@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-Logger logger;
+
 
 int Server::sd;
 int Server::bind_serv;
@@ -21,6 +21,7 @@ int Server::accept_serv;
 
 void Server::serv_init()
 {
+    Logger logger;
     // Создаем сокет сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
@@ -65,6 +66,7 @@ void Server::serv_init()
 
 char* Server::serv_read()
 {
+    Logger logger;
     char *buf = new char[256];
     ssize_t nread = 0;
 
