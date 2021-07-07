@@ -94,7 +94,7 @@ char* Server::serv_read()
     }
     */
     
-    sleep(3);
+    //sleep(3);
     close(sd);
     close(listen_serv);
     return buf;

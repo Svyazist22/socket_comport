@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string.h>
+#include <fstream>
 
 Logger logg;
 
@@ -24,17 +25,18 @@ void Uart::uart_init(int fd){
 
     cfsetspeed(&tty, B9600);   // Скорость приема и передачи
 
-    tty.c_cflag     &=  ~PARENB;            // Бит четности выключен
-    tty.c_cflag     &=  ~CSTOPB;            // Стоп бит один
-    tty.c_cflag     &=  ~CSIZE;             // Очистить маску размера сообщения
-    tty.c_cflag     |=  CS8;                // Сообщение 8 бит
+    tty.c_cflag     &=  ~PARENB;            // Make 8n1
+    tty.c_cflag     &=  ~CSTOPB;
+    tty.c_cflag     &=  ~CSIZE;
+    tty.c_cflag     |=  CS8;
 
-    tty.c_cflag     &=  ~CRTSCTS;           // Отключить аппаратное управление потоком RTS / CTS
-    tty.c_cc[VMIN]   =  1;                  // read doesn't block
-    tty.c_cc[VTIME]  =  5;                  // 0.5 seconds read timeout
+    tty.c_cflag     &=  ~CRTSCTS;           // no flow control
+    tty.c_cc[VMIN]   =  0;                  // read doesn't block
+    tty.c_cc[VTIME]  =  0;                  // 0.5 seconds read timeout
     tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
 
-    cfmakeraw(&tty);
+/* Make raw */
+cfmakeraw(&tty);
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
@@ -51,18 +53,18 @@ void Uart::uart_receive(int fd, fifo_t buf)
     char response[1024];
     memset(response, '\0', sizeof(response));
     char symbol = '\0';
-    while (read(fd, &symbol, 1)<1);
-    do {
-        n = read(fd, &symbol, 1);
-        sprintf(&response[num], "%c", symbol);
-        num += n;
-    } while( symbol != '\r' && n > 0);
-
-    if (strlen(response)>0)
-    {
-        logg.err("Message received:%s",response);
-    }
-
+    read(fd, response, 1024);
+    logg.info("Message received:%s",response);
+    logg.err("%d",strlen(response));
+    fcntl(fd, F_SETFL, FNDELAY);
+    // do {
+    //     n = read(fd, &symbol, 1);
+    //     sprintf(&response[num], "%c", symbol);
+    //     num += n;
+    //     logg.info("Message received:%s",response);
+    // } while(n > 0);
+    //logg.info("Message received:%s",response);
+    tcflush( fd, TCIFLUSH );
     
 }
 

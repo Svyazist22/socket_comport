@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <fcntl.h>
+#include <unistd.h>
 
 int main(int argc, char const *argv[])
 {
@@ -32,12 +33,16 @@ int main(int argc, char const *argv[])
     //Инициализация компорта
     uart.uart_init(fd); 
 
-    // Получаем сообщение от клиента (софт)
-    buf = serv.serv_read(); 
-    log.info("Message received:%s",buf); 
-
-    //Отправляем на компорт
-    uart.uart_transmit(fd,buf,strlen(buf)); 
+   
+        // Получаем сообщение от клиента (софт)
+        buf = serv.serv_read(); 
+        log.info("Message received:%s",buf); 
+        
+        //Отправляем на компорт
+        uart.uart_transmit(fd,buf,strlen(buf)); 
+    
+    
+    
 
     return 0;
 }

@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 {
     Logger log;
 
-    int fd = open("/dev/ttyUSB0",O_RDWR| O_NONBLOCK | O_NDELAY );
+    int fd = open("/dev/ttyUSB0",O_RDWR);
     if ( fd < 0 )
     {
         log.err("Open /dev/ttyUSB0 ERROR");
@@ -31,22 +31,21 @@ int main(int argc, char const *argv[])
 
     cl.client_init();
     uart.uart_init(fd);
+    
+    while (1)
+    {
+        // Вводим команду и отправляем на компорт
+        printf("Write command:");
+        std::cin.getline(str,32);
+        cl.client_write(str);
 
-    //uart.uart_transmit(fd,"Test programm",strlen("Test programm"));
-    //sleep(1);
-    //uart.uart_receive(fd,fbuf);
+        sleep(1);
 
-    // Вводим команду и отправляем на компорт
-    printf("Write command:");
-    std::cin.getline(str,32);
-    cl.client_write(str);
-
-
-    sleep(1);
-
-    // Слушаем компорт
-    uart.uart_receive(fd,fbuf);
-
+        // Слушаем компорт
+        uart.uart_receive(fd,fbuf);
+    }
+    
+ 
 
 
 
