@@ -48,6 +48,7 @@ void Uart::uart_receive(int fd, fifo_t buf)
 {
     int n = 0;
     int num = 0;
+    char hash[8];
     char response[1024];
     memset(response, '\0', sizeof(response));
     char symbol = '\0';
@@ -55,7 +56,8 @@ void Uart::uart_receive(int fd, fifo_t buf)
     read(fd, response, 1024);
     logg.info("Message received:%s",response);
     tcflush( fd, TCIFLUSH );
-    
+    get_hash(response,strlen(response),hash);
+    logg.info("Hash:%s",hash);
 }
 
 void Uart::uart_transmit(int fd, char* str,size_t size)

@@ -8,6 +8,7 @@
 
 #include "fifo.h"
 #include "logger.h"
+#include "crypt.h"
 
 #pragma once
 

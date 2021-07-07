@@ -24,6 +24,7 @@ int main(int argc, char const *argv[])
         return 0;
     }
     fifo_t fbuf;
+    char hash[8];
     char *str = new char; // Команда с консоли
     char *buf = new char; // Сообщение с компорта
     Client cl;
@@ -43,9 +44,8 @@ int main(int argc, char const *argv[])
 
         // Слушаем компорт
         uart.uart_receive(fd,fbuf);
-
-        log.warn("%s - %d",str,strlen(str));
-        log.warn("%s - %d",buf,strlen(buf));
+        get_hash(str,strlen(str),hash);
+        log.info("Hash:%s",hash);
     }
     
  
