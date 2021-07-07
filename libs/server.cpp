@@ -16,6 +16,9 @@ int Server::bind_serv;
 int Server::listen_serv;
 int Server::accept_serv;
 
+
+
+
 void Server::serv_init()
 {
     // Создаем сокет сокет-дескриптор
@@ -62,41 +65,27 @@ void Server::serv_init()
 
 char* Server::serv_read()
 {
-    char *buf = new char;
-    ssize_t nread;
+    char *buf = new char[256];
+    //char buf[256];
+    ssize_t nread = 0;
 
-    /*!
-    Бесконечное чтение
 
-    while (1)
-    {
-        nread = read(accept_serv,&buf,256);
+  
+    while(1){
+        //lseek(sd, SEEK_SET, 0);
+        //nread = read(accept_serv,buf,256);
+        nread = recv(accept_serv,buf,256,0);
         if (nread > 0)
         {
             logger.info("%s",buf);
-            write(accept_serv,&buf,nread);
+            break;
         }
     }
-    */
-
-    //Слшушаем что передает клиент
-    nread = read(accept_serv,buf,256);
-    if (nread < 0)
-    {
-        logger.err("Error read");
-        exit(0);
-    }
-    /*
-    if (nread > 0)
-    {
-        logger.info("%s",buf);
-        write(accept_serv,buf,nread);
-    }
-    */
+    
     
     //sleep(3);
-    close(sd);
-    close(listen_serv);
+    //close(sd);
+    //close(accept_serv);
     return buf;
 }
 

@@ -54,7 +54,7 @@ void Client::client_write(char* str)
     }
     logger.info("Read: %s",buf);
     */
-    close(sd);
+    //close(sd);
 }
 
 
