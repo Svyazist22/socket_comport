@@ -25,17 +25,16 @@ void Uart::uart_init(int fd){
 
     cfsetspeed(&tty, B9600);   // Скорость приема и передачи
 
-    tty.c_cflag     &=  ~PARENB;            // Make 8n1
+    tty.c_cflag     &=  ~PARENB;            
     tty.c_cflag     &=  ~CSTOPB;
     tty.c_cflag     &=  ~CSIZE;
     tty.c_cflag     |=  CS8;
+    tty.c_cflag     &=  ~CRTSCTS;           
+    tty.c_cc[VMIN]   =  0;                  
+    tty.c_cc[VTIME]  =  0;                  
+    tty.c_cflag     |=  CREAD | CLOCAL;     
 
-    tty.c_cflag     &=  ~CRTSCTS;           // no flow control
-    tty.c_cc[VMIN]   =  0;                  // read doesn't block
-    tty.c_cc[VTIME]  =  0;                  // 0.5 seconds read timeout
-    tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
-
-cfmakeraw(&tty);
+    cfmakeraw(&tty);
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
@@ -48,16 +47,17 @@ void Uart::uart_receive(int fd, fifo_t buf)
 {
     int n = 0;
     int num = 0;
-    char hash[8];
     char response[1024];
     memset(response, '\0', sizeof(response));
     char symbol = '\0';
+
     fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
-    logg.info("Message received:%s",response);
+
+    logg.info("Message received from UART:%s",response);
+
     tcflush( fd, TCIFLUSH );
-    get_hash(response,strlen(response),hash);
-    logg.info("Hash:%s",hash);
+
 }
 
 void Uart::uart_transmit(int fd, char* str,size_t size)
@@ -66,6 +66,9 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
     {
         logg.err("Write error!");
     }
-
+    else
+    {
+        logg.info("The message was sent to the UART");  
+    }
 }
 

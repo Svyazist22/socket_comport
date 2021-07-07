@@ -27,7 +27,6 @@ public:
      * @brief Прослушивание UART и запись в fifo
      * @param fd file descriptor ("/dev/ttyUSB0")
      * @param buf Массив для записи полученных данных
-     * @warning Сообщение должно заканчиваться спец. символом "\a"
      */
     void uart_receive(int fd,fifo_t buf);
 

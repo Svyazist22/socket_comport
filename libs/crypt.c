@@ -37,7 +37,7 @@ void get_hash(char *msg, size_t len, char *hex)
          hh[j] = h;
       }
 
-      sprintf(hex,"%x%x%x%x%x%x%x%x\n",
+      sprintf(hex,"%x%x%x%x%x%x%x%x",
          hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);
    }
 
