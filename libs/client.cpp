@@ -43,17 +43,7 @@ void Client::client_init()
 void Client::client_write(char* str)
 {
     write(sd,str,strlen(str));
-    char buf[256];
-    /*
-    ssize_t nread;
-    nread = read(sd,&buf,256);
-    if (nread < 0)
-    {
-        logger.err("Error read");
-        exit(0);
-    }
-    logger.info("Read: %s",buf);
-    */
+
     //close(sd);
 }
 

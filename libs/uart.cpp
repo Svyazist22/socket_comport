@@ -35,14 +35,12 @@ void Uart::uart_init(int fd){
     tty.c_cc[VTIME]  =  0;                  // 0.5 seconds read timeout
     tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
 
-/* Make raw */
 cfmakeraw(&tty);
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
         logg.err("Unable to set port parameters");     
     }
-    
 }
 
 
@@ -53,17 +51,9 @@ void Uart::uart_receive(int fd, fifo_t buf)
     char response[1024];
     memset(response, '\0', sizeof(response));
     char symbol = '\0';
+    fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
     logg.info("Message received:%s",response);
-    logg.err("%d",strlen(response));
-    fcntl(fd, F_SETFL, FNDELAY);
-    // do {
-    //     n = read(fd, &symbol, 1);
-    //     sprintf(&response[num], "%c", symbol);
-    //     num += n;
-    //     logg.info("Message received:%s",response);
-    // } while(n > 0);
-    //logg.info("Message received:%s",response);
     tcflush( fd, TCIFLUSH );
     
 }

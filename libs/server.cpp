@@ -66,14 +66,10 @@ void Server::serv_init()
 char* Server::serv_read()
 {
     char *buf = new char[256];
-    //char buf[256];
     ssize_t nread = 0;
 
-
-  
     while(1){
-        //lseek(sd, SEEK_SET, 0);
-        //nread = read(accept_serv,buf,256);
+
         nread = recv(accept_serv,buf,256,0);
         if (nread > 0)
         {
@@ -82,8 +78,6 @@ char* Server::serv_read()
         }
     }
     
-    
-    //sleep(3);
     //close(sd);
     //close(accept_serv);
     return buf;

@@ -42,7 +42,5 @@ int main(int argc, char const *argv[])
         uart.uart_transmit(fd,buf,strlen(buf)); 
     }
     
-    
-
     return 0;
 }

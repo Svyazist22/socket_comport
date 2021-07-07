@@ -39,10 +39,13 @@ int main(int argc, char const *argv[])
         std::cin.getline(str,32);
         cl.client_write(str);
 
-        sleep(1);
+        sleep(1); // Т.к. используется один компорт нужна задержка
 
         // Слушаем компорт
         uart.uart_receive(fd,fbuf);
+
+        log.warn("%s - %d",str,strlen(str));
+        log.warn("%s - %d",buf,strlen(buf));
     }
     
  
