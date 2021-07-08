@@ -1,4 +1,4 @@
-OBJECTS = stou.o utos.o fifo.o logger.o uart.o server.o client.o uart.o crypt.o
+OBJECTS = stou.o utos.o fifo.o logger.o uart.o server.o client.o crypt.o
 MAIN = ../apps/project/
 LIBS = ../libs/
 INC = ../include/
