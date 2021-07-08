@@ -28,7 +28,8 @@ int main(int argc, char const *argv[])
     fifo_t fbuf; 
     uint8_t *fifo_buf = new uint8_t;
     
-    char hash[16]; 
+    char h1[8]; // Хэш отправленного сообщения
+    char h2[8]; // Хэш полученного сообщения
     char *str = new char; // Команда с консоли
     char *buf = new char; // Сообщение с компорта
 
@@ -41,18 +42,25 @@ int main(int argc, char const *argv[])
         printf("Write command:");
         std::cin.getline(str,32);   // Считываем команду с консоли
         cl.client_write(str);       // Отправляем на компорт
+        get_hash(str,strlen(str),h1); 
+
 
         sleep(1); // Т.к. используется один компорт нужна задержка
 
         uart.uart_receive(fd,&fbuf); // Слушаем компорт
         fifo_read_pop(&fbuf,buf,1024);
-        log.info("Message received from UART:%s",str);
-        
+        log.info("Message received from UART:%s",buf);
 
-        
+        get_hash(buf,strlen(buf),h2); 
 
-        //get_hash(str,strlen(str),hash); 
-        //log.info("Hash:%s",hash);
+        if(compare_hash(h1,h2))
+        {
+            log.info("The messages are the same");
+        }
+        else
+        {
+            log.err("The messages are different!");
+        }
     }
     
     return 0;
