@@ -1,6 +1,8 @@
 
 #include "../include/crypt.h"
 
+
+
 void get_hash(char *msg, size_t len, char *hex) 
    {
       int i;
@@ -50,5 +52,19 @@ char* XORCipher(char* data, char* key, int dataLen, int keyLen) {
 	}
 
 	return output;
+}
+
+bool compare_hash(char* h1,char* h2)
+{
+   int i =0;
+   while (i<16)
+   {
+      if (h1[i] != h2[i])
+      {
+         return false;
+      }
+      i++;
+   }
+   return true;
 }
    
