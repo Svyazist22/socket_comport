@@ -28,7 +28,7 @@ public:
      * @param fd file descriptor ("/dev/ttyUSB0")
      * @param buf Массив для записи полученных данных
      */
-    void uart_receive(int fd,fifo_t buf);
+    void uart_receive(int fd,fifo_t *buf);
 
     /**
      * @brief Отправляет данные на UART

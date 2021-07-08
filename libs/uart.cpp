@@ -17,6 +17,7 @@
 Logger logg;
 
 
+
 void Uart::uart_init(int fd){
 
     struct termios tty;
@@ -43,8 +44,9 @@ void Uart::uart_init(int fd){
 }
 
 
-void Uart::uart_receive(int fd, fifo_t buf)
+void Uart::uart_receive(int fd, fifo_t *buf)
 {
+    
     int n = 0;
     int num = 0;
     char response[1024];
@@ -54,9 +56,19 @@ void Uart::uart_receive(int fd, fifo_t buf)
     fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
 
-    logg.info("Message received from UART:%s",response);
+    //logg.info("Message received from UART:%s",response);
 
     tcflush( fd, TCIFLUSH );
+
+    if (fifo_free(buf)>=1024)
+    {
+        fifo_write_push(buf,response,1024);        
+    }
+    else
+    {
+        logg.err("The buffer is ful");
+    }
+
 
 }
 

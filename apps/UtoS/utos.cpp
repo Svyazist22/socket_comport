@@ -25,13 +25,16 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    fifo_t fbuf; // Временная заглушка!
+    fifo_t fbuf; 
+    uint8_t *fifo_buf = new uint8_t;
+    
     char hash[16]; 
     char *str = new char; // Команда с консоли
     char *buf = new char; // Сообщение с компорта
 
     cl.client_init();
     uart.uart_init(fd);
+    fifo_init(&fbuf,fifo_buf,10240);
     
     while (1)
     {
@@ -41,7 +44,12 @@ int main(int argc, char const *argv[])
 
         sleep(1); // Т.к. используется один компорт нужна задержка
 
-        uart.uart_receive(fd,fbuf); // Слушаем компорт
+        uart.uart_receive(fd,&fbuf); // Слушаем компорт
+        fifo_read_pop(&fbuf,buf,1024);
+        log.info("Message received from UART:%s",str);
+        
+
+        
 
         //get_hash(str,strlen(str),hash); 
         //log.info("Hash:%s",hash);
