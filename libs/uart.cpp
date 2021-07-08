@@ -46,12 +46,8 @@ void Uart::uart_init(int fd){
 
 void Uart::uart_receive(int fd, fifo_t *buf)
 {
-    
-    int n = 0;
-    int num = 0;
     char response[1024];
     memset(response, '\0', sizeof(response));
-    char symbol = '\0';
 
     fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
@@ -66,8 +62,6 @@ void Uart::uart_receive(int fd, fifo_t *buf)
     {
         logg.err("The buffer is ful");
     }
-
-
 }
 
 void Uart::uart_transmit(int fd, char* str,size_t size)
