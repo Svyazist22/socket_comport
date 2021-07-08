@@ -25,7 +25,8 @@ public:
     static void client_init();
 
     /**
-     * @brief Отправляет данные client. Принимает подтвеждение от client
+     * @brief Отправляет данные client
+     * @param str Указатель на сообщение
      */
     static void client_write(char* str);
 };

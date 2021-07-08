@@ -40,20 +40,19 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        std::cin.getline(str,32);   // Считываем команду с консоли
-        cl.client_write(str);       // Отправляем на компорт
-        get_hash(str,strlen(str),h1); 
+        std::cin.getline(str,32);       // Считываем команду с консоли
+        cl.client_write(str);           // Отправляем на компорт
+        get_hash(str,strlen(str),h1);   // Получаем хэш отправленного сообщения
 
+        sleep(1);                       // Т.к. используется один компорт нужна задержка
 
-        sleep(1); // Т.к. используется один компорт нужна задержка
-
-        uart.uart_receive(fd,&fbuf); // Слушаем компорт
-        fifo_read_pop(&fbuf,buf,1024);
+        uart.uart_receive(fd,&fbuf);    // Слушаем компорт
+        fifo_read_pop(&fbuf,buf,1024);  // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",buf);
+        get_hash(buf,strlen(buf),h2);   // Получаем хэш полученного сообщения
 
-        get_hash(buf,strlen(buf),h2); 
-
-        if(compare_hash(h1,h2))
+        // Сравниваем хэши сообщений
+        if(compare_hash(h1,h2))         
         {
             log.info("The messages are the same");
         }

@@ -56,8 +56,6 @@ void Uart::uart_receive(int fd, fifo_t *buf)
     fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
 
-    //logg.info("Message received from UART:%s",response);
-
     tcflush( fd, TCIFLUSH );
 
     if (fifo_free(buf)>=1024)

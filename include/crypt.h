@@ -20,8 +20,8 @@ void get_hash(char *msg, size_t len, char *hex);
 
 /**
  * @brief Шифрование XOR
- * @param data Текст для шифрования
- * @param key Ключ шифрования
+ * @param data Указатель на текст для шифрования
+ * @param key Указатель на ключ шифрования
  * @param dataLen Длина сообщения
  * @param keyLen Длина ключа
  * @return char* Возвращает указатель на зашифрованне сообщение
@@ -31,8 +31,8 @@ char* XORCipher(char* data, char* key, int dataLen, int keyLen);
 
 /**
  * @brief Сравнивает хэши
- * @param h1 Ссылка на первый хэш
- * @param h2 Ссылка на второй хэш
+ * @param h1 Указатель на первый хэш
+ * @param h2 Указатель на второй хэш
  * @return true если они одинаковые, иначе false
  */
 bool compare_hash(char* h1,char* h2);

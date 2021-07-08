@@ -26,14 +26,14 @@ public:
     /**
      * @brief Прослушивание UART и запись в fifo
      * @param fd file descriptor ("/dev/ttyUSB0")
-     * @param buf Массив для записи полученных данных
+     * @param buf Указаель на массив для записи полученных данных
      */
     void uart_receive(int fd,fifo_t *buf);
 
     /**
      * @brief Отправляет данные на UART
      * @param fd file descriptor ("/dev/ttyUSB0")
-     * @param str Сообщение
+     * @param str Указатель на отправляемое сообщение
      * @param size Размер сообщения
      */
     void uart_transmit(int fd, char* str,size_t size);
