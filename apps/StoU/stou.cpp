@@ -36,9 +36,13 @@ int main(int argc, char const *argv[])
     while(1)
     {
         buf = serv.serv_read();                 // Получаем сообщение от клиента (софт)
-        log.info("Message received:%s",buf); 
+        if (strlen(buf)>0)
+        {
+            log.info("Message received:%s",buf); 
+            uart.uart_transmit(fd,buf,strlen(buf)); //Отправляем на компорт
+        }
         
-        uart.uart_transmit(fd,buf,strlen(buf)); //Отправляем на компорт
+        
     }
     
     return 0;
