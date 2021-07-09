@@ -70,15 +70,9 @@ char* Server::serv_read()
     char *buf = new char[1024];
     ssize_t nread = 0;
 
-    while(1){
-
-        nread = recv(accept_serv,buf,sizeof(buf),0);
-        if (nread > 0)
-        {
-            logger.info("%s",buf);
-            break;
-        }
-    }
+  
+        nread = recv(accept_serv,buf,1024,0);
+       
     
     //close(sd);
     //close(accept_serv);

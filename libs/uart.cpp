@@ -72,7 +72,7 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
     }
     else
     {
-        logg.info("The message was sent to the UART");  
+        logg.info("The message was sent to the UART");
     }
 }
 

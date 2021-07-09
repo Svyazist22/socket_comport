@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 
     char* buf = new char;
 
-    int fd = open("/dev/ttyUSB0",O_RDWR| O_NONBLOCK | O_NDELAY );
+    int fd = open("/dev/ttyUSB0",O_RDWR);
     if ( fd < 0 )
     {
         log.err("Open /dev/ttyUSB0 ERROR");
