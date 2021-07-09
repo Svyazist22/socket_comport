@@ -34,6 +34,9 @@ int main(int argc, char const *argv[])
     char *h1 = new char[16];  // Хэш отправленного сообщения
     char *h2 = new char[16]; // Хэш полученного сообщения
 
+    char hh1[16] = {0};
+    char hh2[16]; 
+
     cl.client_init();
     uart.uart_init(fd);
     fifo_init(&fbuf,fifo_buf,10240);
@@ -41,23 +44,24 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        std::cin.getline(str,1024);       // Считываем команду с консоли
+        std::cin.getline(str,1024);     // Считываем команду с консоли
         cl.client_write(str);           // Отправляем на компорт
         get_hash(str,strlen(str),h1);   // Получаем хэш отправленного сообщения
-        log.info("%s=%d",str,strlen(str));
-       
 
+        for (size_t i = 0; i < 16; i++)
+        {
+            hh1[i]= h1[i];
+        }
+        
         sleep(1);                       // Т.к. используется один компорт нужна задержка
      
-
         uart.uart_receive(fd,&fbuf);    // Слушаем компорт и записываем в буффер
         fifo_read_pop(&fbuf,buf,1024);  // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",buf);
         get_hash(buf,strlen(buf),h2);   // Получаем хэш полученного сообщения
-        log.info("%s=%d",buf,strlen(buf));
-        
+
         // Сравниваем хэши сообщений
-        if(compare_hash(h1,h2))         
+        if(compare_hash(hh1,h2))         
         {
             log.info("The messages are the same");
         }
@@ -65,9 +69,6 @@ int main(int argc, char const *argv[])
         {
             log.err("The messages are different!");
         }
-      
-        log.info("%s",h2);
-
 
     }
     
