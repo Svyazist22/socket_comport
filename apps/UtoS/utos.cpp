@@ -49,19 +49,10 @@ int main(int argc, char const *argv[])
         if (strcmp(str,"stop")==0)
         {
             cl.client_stop();
-            delete [] str;
-            log.err("Delete str");
-            delete [] buf;
-            log.err("Delete buf");
-            delete [] h1;
-            log.err("Delete h1");
-            delete [] h2;
-            log.err("Delete h2");
             log.err("The program is stopped!");
             return 0;
         }
         
-
         sleep(1);                       // Т.к. используется один компорт нужна задержка
      
         uart.uart_receive(fd,&fbuf);    // Слушаем компорт и записываем в буффер
@@ -78,10 +69,8 @@ int main(int argc, char const *argv[])
         {
             log.err("The messages are different!");
         }
-        log.warn("%s",h1);
-        log.warn("%s",h2);
-
-
+        log.err(h1);
+        log.err(h2);
     }
     
     return 0;
