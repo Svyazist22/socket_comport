@@ -79,4 +79,10 @@ char* Server::serv_read()
     return buf;
 }
 
+void Server::serv_stop()
+{
+    close(accept_serv);
+    close(sd);
+}
+
 

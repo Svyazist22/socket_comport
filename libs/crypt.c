@@ -39,7 +39,7 @@ void get_hash(char *msg, size_t len,char* hex)
       hh[j] = h;
    }
    
-   sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X",
+   sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X\0",
    hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);   
 }
 
@@ -59,11 +59,9 @@ bool compare_hash(char* h1,char* h2)
    int i = 0;
    while (i<16)
    {
-      
       if (h1[i] != h2[i])
       {
          return false;
-         
       }
       i++;
    }

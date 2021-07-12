@@ -29,4 +29,9 @@ public:
      * @param str Указатель на сообщение
      */
     static void client_write(char* str);
+
+    /**
+     * @brief Останавливает соединение
+     */
+    static void client_stop();
 };

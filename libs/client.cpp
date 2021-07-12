@@ -44,10 +44,13 @@ void Client::client_init()
 void Client::client_write(char* str)
 {
     write(sd,str,strlen(str));
-    
-
-    //close(sd);
 }
+
+void Client::client_stop()
+{
+    close(sd);
+}
+
 
 
 

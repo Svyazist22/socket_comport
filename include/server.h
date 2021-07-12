@@ -35,6 +35,11 @@ public:
      * @return char* Возвращает указатель на полученное сообщение
      */
     char* serv_read();
+
+    /**
+     * @brief Останавливает соединение
+     */
+    static void serv_stop();
     
 };
 
