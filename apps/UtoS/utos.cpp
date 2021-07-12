@@ -49,6 +49,9 @@ int main(int argc, char const *argv[])
         if (strcmp(str,"stop")==0)
         {
             cl.client_stop();
+            delete [] buf;
+            delete [] h1;
+            delete [] h2;
             log.err("The program is stopped!");
             return 0;
         }

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "main.h": "c",
-        "istream": "cpp"
+        "istream": "cpp",
+        "new": "cpp"
     }
 }
