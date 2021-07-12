@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
 
     while(1)
     {
-        buf = serv.serv_read();                 // Получаем сообщение от клиента (софт)
+        buf = serv.serv_read();     // Получаем сообщение от клиента
         
         // Команда остановки программ
         if (strcmp(buf,"stop")==0)
@@ -45,14 +45,12 @@ int main(int argc, char const *argv[])
             log.err("The program is stopped!");
             return 0;
         }
+
         if (strlen(buf)>0)
         {
             log.info("Message received:%s",buf); 
             uart.uart_transmit(fd,buf,strlen(buf)); //Отправляем на компорт
         }
-        
-        
-        
     }
     
     return 0;

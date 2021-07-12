@@ -69,8 +69,6 @@ int main(int argc, char const *argv[])
         {
             log.err("The messages are different!");
         }
-        log.err(h1);
-        log.err(h2);
     }
     
     return 0;
