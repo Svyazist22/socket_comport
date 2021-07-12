@@ -42,6 +42,13 @@ int main(int argc, char const *argv[])
     {
         printf("Write command:");
         std::cin.getline(str,1024);     // Считываем команду с консоли
+        // Проверка на непустое сообщение
+        if (strlen(str)==0)
+        {
+            log.err("Command input error (the command is empty). Please try again");
+            continue;
+        }
+        
         cl.client_write(str);           // Отправляем на компорт
         get_hash(str,strlen(str),h1);   // Получаем хэш отправленного сообщения
 
@@ -49,9 +56,6 @@ int main(int argc, char const *argv[])
         if (strcmp(str,"stop")==0)
         {
             cl.client_stop();
-            delete [] buf;
-            delete [] h1;
-            delete [] h2;
             log.err("The program is stopped!");
             return 0;
         }
