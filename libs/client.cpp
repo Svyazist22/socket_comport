@@ -7,9 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include<iostream>
-
-
+#include <iostream>
 
 int Client::sd;
 int Client::connect_client;
