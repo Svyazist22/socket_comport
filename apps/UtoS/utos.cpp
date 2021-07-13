@@ -29,10 +29,10 @@ int main(int argc, char const *argv[])
     fifo_t fbuf; 
     uint8_t *fifo_buf = new uint8_t;
     
-    char *str_cons = new char[1024];    // Команда с консоли
-    char *str_com = new char[1024];     // Сообщение с компорта
-    char *h1 = new char[17];            // Хэш отправленного сообщения
-    char *h2 = new char[17];            // Хэш полученного сообщения
+    char *str_cons = new char[1024];                // Команда с консоли
+    char *str_com = new char[1024];                 // Сообщение с компорта
+    char *h1 = new char[17];                        // Хэш отправленного сообщения
+    char *h2 = new char[17];                        // Хэш полученного сообщения
 
     cl.client_init();
     uart.uart_init(fd);
