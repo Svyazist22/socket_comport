@@ -22,27 +22,27 @@ void Uart::uart_init(int fd){
 
     struct termios tty;
     
-    tcgetattr(fd,&tty);        // Получение стандартных настроек
+    tcgetattr(fd,&tty);                     // Получение стандартных настроек
 
-    cfsetspeed(&tty, B9600);   // Скорость приема и передачи
+    cfsetspeed(&tty, B9600);                // Скорость приема и передачи
 
-    tty.c_cflag     &=  ~PARENB;        // Бит четности выключен       
-    tty.c_cflag     &=  ~CSTOPB;        // Стоп бит один
-    tty.c_cflag     &=  ~CSIZE;         // Очистить маску
-    tty.c_cflag     |=  CS8;            // Сообщение 8 бит
-    tty.c_cflag     &=  ~CRTSCTS;       // Управление потоком RTS/CTS выключено 
-    tty.c_cc[VMIN]   =  0;              // Ожидание 0 бит  
-    tty.c_cc[VTIME]  =  0;              // Ожидание 0 дсек  
-    tty.c_cflag     |=  CREAD | CLOCAL; // CLOCAL позволяет считывать данные.  
+    tty.c_cflag     &=  ~PARENB;            // Бит четности выключен       
+    tty.c_cflag     &=  ~CSTOPB;            // Стоп бит один
+    tty.c_cflag     &=  ~CSIZE;             // Очистить маску
+    tty.c_cflag     |=  CS8;                // Сообщение 8 бит
+    tty.c_cflag     &=  ~CRTSCTS;           // Управление потоком RTS/CTS выключено 
+    tty.c_cc[VMIN]   =  0;                  // Ожидание 0 бит  
+    tty.c_cc[VTIME]  =  0;                  // Ожидание 0 дсек  
+    tty.c_cflag     |=  CREAD | CLOCAL;     // CLOCAL позволяет считывать данные.  
 
-    tty.c_lflag &= ~ICANON;             // Канонический режим выключен
-    tty.c_lflag &= ~(ECHO|ECHOE|ECHONL);// Отключить ЭХО
-    tty.c_lflag &= ~ISIG;               // Отключить сигнальные символы
+    tty.c_lflag &= ~ICANON;                 // Канонический режим выключен
+    tty.c_lflag &= ~(ECHO|ECHOE|ECHONL);    // Отключить ЭХО
+    tty.c_lflag &= ~ISIG;                   // Отключить сигнальные символы
     tty.c_iflag &= ~(IXON | IXOFF | IXANY); //Отключение программного управления потоком
     tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL); // Отключение специальной 
                                                                      // обработки байтов при приеме
-    tty.c_oflag &= ~OPOST;              // Отключить преобразование выходных символов
-    tty.c_oflag &= ~ONLCR;              // Запретить преобразование новой строки в возврат каретки
+    tty.c_oflag &= ~OPOST;                  // Отключить преобразование выходных символов
+    tty.c_oflag &= ~ONLCR;                  // Запретить преобразование новой строки в возврат каретки
 
     cfmakeraw(&tty);
 
