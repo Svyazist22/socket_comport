@@ -29,10 +29,10 @@ int main(int argc, char const *argv[])
     fifo_t fbuf; 
     uint8_t *fifo_buf = new uint8_t;
     
-    char *str_cons = new char[1024]; // Команда с консоли
-    char *str_com = new char[1024]; // Сообщение с компорта
-    char *h1 = new char[17];  // Хэш отправленного сообщения
-    char *h2 = new char[17]; // Хэш полученного сообщения
+    char *str_cons = new char[1024];    // Команда с консоли
+    char *str_com = new char[1024];     // Сообщение с компорта
+    char *h1 = new char[17];            // Хэш отправленного сообщения
+    char *h2 = new char[17];            // Хэш полученного сообщения
 
     cl.client_init();
     uart.uart_init(fd);
@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        std::cin.getline(str_cons,1024);     // Считываем команду с консоли
+        std::cin.getline(str_cons,1024);            // Считываем команду с консоли
         
         // Проверка на непустое сообщение
         if (strlen(str_cons)==0)
@@ -50,8 +50,8 @@ int main(int argc, char const *argv[])
             continue;
         }
         
-        cl.client_write(str_cons);           // Отправляем на компорт
-        get_hash(str_cons,strlen(str_cons),h1);   // Получаем хэш отправленного сообщения
+        cl.client_write(str_cons);                  // Отправляем на компорт
+        get_hash(str_cons,strlen(str_cons),h1);     // Получаем хэш отправленного сообщения
 
         // Команда остановки программ
         if (strcmp(str_cons,"stop")==0)
@@ -61,12 +61,12 @@ int main(int argc, char const *argv[])
             return 0;
         }
         
-        sleep(1);                       // Т.к. используется один компорт нужна задержка
+        sleep(1);                                   // Т.к. используется один компорт нужна задержка
      
-        uart.uart_receive(fd,&fbuf);    // Слушаем компорт и записываем в буффер
-        fifo_read_pop(&fbuf,str_com,1024);  // Берем из буффера полученное сообщение
+        uart.uart_receive(fd,&fbuf);                // Слушаем компорт и записываем в буффер
+        fifo_read_pop(&fbuf,str_com,1024);          // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
-        get_hash(str_com,strlen(str_com),h2);   // Получаем хэш полученного сообщения
+        get_hash(str_com,strlen(str_com),h2);       // Получаем хэш полученного сообщения
         
         // Сравниваем хэши сообщений
         if(compare_hash(h1,h2))         

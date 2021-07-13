@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
 
     while(1)
     {
-        buf = serv.serv_read();     // Получаем сообщение от клиента
+        buf = serv.serv_read();                     // Получаем сообщение от клиента
         
         // Команда остановки программ
         if (strcmp(buf,"stop")==0)
