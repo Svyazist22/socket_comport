@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
     int fd = open("/dev/ttyUSB0",O_RDWR);
     if ( fd < 0 )
     {
-        log.err("Open /dev/ttyUSB0 ERROR");
+        log.err("Open /dev/ttyUSB0 ERROR: %s",strerror(errno));
         return 0;
     }
 

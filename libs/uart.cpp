@@ -39,7 +39,7 @@ void Uart::uart_init(int fd){
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
-        logg.err("Unable to set port parameters");     
+        logg.err("Unable to set port parameters: %s",strerror(errno));     
     }
 }
 
@@ -68,7 +68,7 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
 {
     if (write(fd,str,size) == -1)
     {
-        logg.err("Write error!");
+        logg.err("Write error! %s",strerror(errno));
     }
     else
     {

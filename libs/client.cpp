@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include<iostream>
 
 
 
@@ -20,7 +21,7 @@ void Client::client_init()
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
     {
-        logger.err("Error create socket");
+        logger.err("Error create socket: %s",strerror(errno));
         exit(0);
     }
 
@@ -35,7 +36,7 @@ void Client::client_init()
     connect_client = connect(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr));
     if (connect_client ==-1)
     {
-        logger.err("Error connect");
+        logger.err("Error connect: %s",strerror(errno));
         exit(0);
     }
 

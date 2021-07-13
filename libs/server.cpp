@@ -26,7 +26,7 @@ void Server::serv_init()
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
     {
-        logger.err("Error create socket");
+        logger.err("Error create socket: %s",strerror(errno));
         exit(0);
     }
     
@@ -39,7 +39,7 @@ void Server::serv_init()
     bind_serv = bind(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)); 
     if (bind_serv ==-1)
     {
-        logger.err("Error create bind");
+        logger.err("Error create bind: %s",strerror(errno));
         exit(0);
     }
 
@@ -47,7 +47,7 @@ void Server::serv_init()
     listen_serv = listen(sd,5);
     if (listen_serv ==-1)
     {
-        logger.err("Error listen");
+        logger.err("Error listen: %s",strerror(errno));
         exit(0);
     }
 
@@ -59,7 +59,7 @@ void Server::serv_init()
     accept_serv = accept(sd,(struct sockaddr*)&client_addr,&length);
     if (accept_serv ==-1)
     {
-        logger.err("Error accept");
+        logger.err("Error accept: %s",strerror(errno));
         exit(0);
     }
 }
@@ -70,12 +70,8 @@ char* Server::serv_read()
     char *buf = new char[1024];
     ssize_t nread = 0;
 
-  
-        nread = recv(accept_serv,buf,1024,0);
-       
-    
-    //close(sd);
-    //close(accept_serv);
+    nread = recv(accept_serv,buf,1024,0);
+
     return buf;
 }
 
