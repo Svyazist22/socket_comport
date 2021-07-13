@@ -6,6 +6,7 @@
  * @date 2021-06-28
  */
 #include "../include/uart.h"
+
 #include <fcntl.h>
 #include <termios.h>
 #include <cstdio>
@@ -15,8 +16,6 @@
 #include <fstream>
 
 Logger logg;
-
-
 
 void Uart::uart_init(int fd){
 
