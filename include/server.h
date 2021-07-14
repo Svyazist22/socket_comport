@@ -15,20 +15,20 @@
 class Server
 {
     /// Socket descriptor
-    static int sd;
+    int sd;
     /// Код возврата связывания сокета с адрессом
-    static int bind_serv;
+    int bind_serv;
     /// Код возврата прослушивания сокета
-    static int listen_serv;
+    int listen_serv;
     /// Новый socket descriptor для общения с client
-    static int accept_serv;
+    int accept_serv;
 
 public:
 
     /**
      * @brief Инициализация server
      */
-    static void serv_init();
+    void serv_init();
 
     /**
      * @brief Прослушивание client
@@ -39,7 +39,7 @@ public:
     /**
      * @brief Останавливает соединение
      */
-    static void serv_stop();
+    void serv_stop();
     
 };
 

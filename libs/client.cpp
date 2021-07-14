@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-int Client::sd;
-int Client::connect_client;
 
 void Client::client_init()
 {
@@ -22,6 +20,7 @@ void Client::client_init()
         logger.err("Error create socket: %s",strerror(errno));
         exit(0);
     }
+ 
 
     struct sockaddr_in serv_addr = {0};
     serv_addr.sin_family = AF_INET;

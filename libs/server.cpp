@@ -9,16 +9,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-
-
-int Server::sd;
-int Server::bind_serv;
-int Server::listen_serv;
-int Server::accept_serv;
-
-
-
-
 void Server::serv_init()
 {
     Logger logger;

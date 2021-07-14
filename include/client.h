@@ -13,25 +13,25 @@
 class Client
 {
     /// Socket descriptor
-    static int sd;
+    int sd;
     /// Код возврата связывания сокета с server
-    static int connect_client;
+    int connect_client;
 
 public:
 
     /**
      * @brief Инициализация client
      */
-    static void client_init();
+    void client_init();
 
     /**
      * @brief Отправляет данные client
      * @param str Указатель на сообщение
      */
-    static void client_write(char* str);
+    void client_write(char* str);
 
     /**
      * @brief Останавливает соединение
      */
-    static void client_stop();
+    void client_stop();
 };
