@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
         }
         
         cl.client_write(str_cons);                  // Отправляем на компорт
-        get_hash(str_cons,strlen(str_cons),h1);     // Получаем хэш отправленного сообщения
+        create_hash(str_cons,strlen(str_cons),h1);     // Получаем хэш отправленного сообщения
 
         // Команда остановки программ
         if (strcmp(str_cons,"stop")==0)
@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
         uart.uart_receive(fd,&fbuf);                // Слушаем компорт и записываем в буффер
         fifo_read_pop(&fbuf,str_com,1024);          // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
-        get_hash(str_com,strlen(str_com),h2);       // Получаем хэш полученного сообщения
+        create_hash(str_com,strlen(str_com),h2);       // Получаем хэш полученного сообщения
         
         // Сравниваем хэши сообщений
         if(compare_hash(h1,h2))         

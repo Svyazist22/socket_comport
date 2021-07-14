@@ -10,29 +10,18 @@
 #include <stdbool.h>
 
 /**
- * @brief Создание хэша
- * @param msg Сообщение из которого получается хэш
- * @param len Длина сообщения
- * @param hex Куда записывается хэш (размер хэша 16 символов)
+ * @brief Создание хэша cообщения (размер хэша 16 символов)
+ * @param [in] msg  Указатель на сообщение
+ * @param [in] len  Длина сообщения
+ * @param [in] hex  Указатель на массив для записи хэша 
  */
-void get_hash(char *msg, size_t len, char *hex);
+void create_hash(char *msg, size_t len, char *hex);
 
 
 /**
- * @brief Шифрование XOR
- * @param data Указатель на текст для шифрования
- * @param key Указатель на ключ шифрования
- * @param dataLen Длина сообщения
- * @param keyLen Длина ключа
- * @return char* Возвращает указатель на зашифрованне сообщение
- */
-char* XORCipher(char* data, char* key, int dataLen, int keyLen);
-
-
-/**
- * @brief Сравнивает хэши
- * @param h1 Указатель на первый хэш
- * @param h2 Указатель на второй хэш
+ * @brief Сравнивнение двух хэшей
+ * @param [in] h1 Указатель на первый хэш
+ * @param [in] h2 Указатель на второй хэш
  * @return true если они одинаковые, иначе false
  */
 bool compare_hash(char* h1,char* h2);
