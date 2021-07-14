@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <thread>
 
+
 int main(int argc, char const *argv[])
 {
     Logger log;
@@ -20,11 +21,7 @@ int main(int argc, char const *argv[])
     Uart uart;
 
     int fd = uart.uart_fd();
-    if (fd < 0 )
-    {
-        return 0;
-    }
-    
+  
 
     fifo_t fbuf; 
     uint8_t *fifo_buf = new uint8_t;
@@ -34,7 +31,7 @@ int main(int argc, char const *argv[])
     char *h1 = new char[17];                        // Хэш отправленного сообщения
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
-    cl.client_init();                               // Инициализация клианта
+    cl.client_init();                               // Инициализация клиента
     uart.uart_init(fd);                             // Инициализация компорта
     fifo_init(&fbuf,fifo_buf,10240);                // Инициализация fifo-буффера
   

@@ -89,9 +89,8 @@ int Uart::uart_fd()
     int fd = -1;
     char addr[64] = "/dev/ttyUSB0"; // Стандартный путь
     char command;                   // Выбор дейстия при ошибке
-    bool incorrect = true;          // Условие выхода из цикла
-    
-    while (incorrect)
+
+    while (1)
     {
         fd = open(addr,O_RDWR);
         if (fd > 0)
@@ -118,12 +117,12 @@ int Uart::uart_fd()
 
             // Завершить программу
             case 'c':
-                incorrect = false;
+                exit(EXIT_FAILURE);
                 break;
 
             // Неверная команда завершает программу    
             default:
-                incorrect = false;
+                exit(EXIT_FAILURE);
                 break;
             }
         }
