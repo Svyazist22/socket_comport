@@ -19,12 +19,12 @@ int main(int argc, char const *argv[])
     Client cl;
     Uart uart;
 
-    int fd = open("/dev/ttyUSB0",O_RDWR);
-    if ( fd < 0 )
+    int fd = uart.uart_fd();
+    if (fd < 0 )
     {
-        log.err("Open /dev/ttyUSB0 ERROR: %s",strerror(errno));
         return 0;
     }
+    
 
     fifo_t fbuf; 
     uint8_t *fifo_buf = new uint8_t;
@@ -41,8 +41,8 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        std::cin.getline(str_cons,1024);            // Считываем команду с консоли
-        
+        //std::cin.getline(str_cons,1024);            // Считываем команду с консоли
+        std::cin >> str_cons;
         // Проверка на непустое сообщение
         if (strlen(str_cons)==0)
         {

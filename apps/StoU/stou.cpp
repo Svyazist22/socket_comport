@@ -20,10 +20,9 @@ int main(int argc, char const *argv[])
 
     char* buf = new char;
 
-    int fd = open("/dev/ttyUSB0",O_RDWR);
+    int fd = uart.uart_fd();
     if ( fd < 0 )
     {
-        log.err("Open /dev/ttyUSB0 ERROR: %s",strerror(errno));
         return 0;
     }
 

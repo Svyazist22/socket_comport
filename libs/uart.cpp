@@ -84,3 +84,51 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
     }
 }
 
+int Uart::uart_fd()
+{
+    int fd = -1;
+    char addr[64] = "/dev/ttyUSB0"; // Стандартный путь
+    char command;                   // Выбор дейстия при ошибке
+    bool incorrect = true;          // Условие выхода из цикла
+    
+    while (incorrect)
+    {
+        fd = open(addr,O_RDWR);
+        if (fd > 0)
+        {
+            break;
+        }
+        else
+        {
+            logg.err("Open ERROR %s: %s",addr,strerror(errno));
+            printf("You can (r)epeat, (w)rite new addres, (c)lose programm:");
+            command = '\0';
+            std::cin >> command;    // Ввод выбора действия при ошибке открытия 
+            switch (command)
+            {
+            // Повтрорить открытие
+            case 'r':                       
+                break;
+
+            // Ввести новый адрес
+            case 'w':                       
+            printf("Addres (ex.:/dev/ttyUSB0):");
+            std::cin >> addr;
+                break;
+
+            // Завершить программу
+            case 'c':
+                incorrect = false;
+                break;
+
+            // Неверная команда завершает программу    
+            default:
+                incorrect = false;
+                break;
+            }
+        }
+    }
+    
+    
+    return fd;
+}
