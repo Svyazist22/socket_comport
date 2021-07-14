@@ -34,9 +34,9 @@ int main(int argc, char const *argv[])
     char *h1 = new char[17];                        // Хэш отправленного сообщения
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
-    cl.client_init();
-    uart.uart_init(fd);
-    fifo_init(&fbuf,fifo_buf,10240);
+    cl.client_init();                               // Инициализация клианта
+    uart.uart_init(fd);                             // Инициализация компорта
+    fifo_init(&fbuf,fifo_buf,10240);                // Инициализация fifo-буффера
   
     while (1)
     {
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
         }
         
         cl.client_write(str_cons);                  // Отправляем на компорт
-        create_hash(str_cons,strlen(str_cons),h1);     // Получаем хэш отправленного сообщения
+        create_hash(str_cons,strlen(str_cons),h1);  // Получаем хэш отправленного сообщения
 
         // Команда остановки программ
         if (strcmp(str_cons,"stop")==0)
@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
         uart.uart_receive(fd,&fbuf);                // Слушаем компорт и записываем в буффер
         fifo_read_pop(&fbuf,str_com,1024);          // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
-        create_hash(str_com,strlen(str_com),h2);       // Получаем хэш полученного сообщения
+        create_hash(str_com,strlen(str_com),h2);    // Получаем хэш полученного сообщения
         
         // Сравниваем хэши сообщений
         if(compare_hash(h1,h2))         
