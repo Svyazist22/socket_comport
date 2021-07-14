@@ -19,22 +19,22 @@ public:
 
     /**
      * @brief Инициализация USB<=>UART
-     * @param fd file descriptor ("/dev/ttyUSB0")
+     * @param [in] fd       file descriptor ("/dev/ttyUSB0")
      */
     void uart_init(int fd);
 
     /**
      * @brief Прослушивание UART и запись в fifo
-     * @param fd file descriptor ("/dev/ttyUSB0")
-     * @param buf Указаель на массив для записи полученных данных
+     * @param [in] fd       file descriptor ("/dev/ttyUSB0")
+     * @param [in,out] buf  Указаель на массив для записи полученных данных
      */
     void uart_receive(int fd,fifo_t *buf);
 
     /**
-     * @brief Отправляет данные на UART
-     * @param fd file descriptor ("/dev/ttyUSB0")
-     * @param str Указатель на отправляемое сообщение
-     * @param size Размер сообщения
+     * @brief Отправка данных на UART
+     * @param [in] fd       file descriptor ("/dev/ttyUSB0")
+     * @param [in] str      Указатель на отправляемое сообщение
+     * @param [in] size     Размер сообщения
      */
     void uart_transmit(int fd, char* str,size_t size);
  

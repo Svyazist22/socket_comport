@@ -11,9 +11,9 @@
 
 /**
  * @brief Создание хэша cообщения (размер хэша 16 символов)
- * @param [in] msg  Указатель на сообщение
- * @param [in] len  Длина сообщения
- * @param [in] hex  Указатель на массив для записи хэша 
+ * @param [in] msg      Указатель на сообщение
+ * @param [in] len      Длина сообщения
+ * @param [in,out] hex  Указатель на массив для записи хэша 
  */
 void create_hash(char *msg, size_t len, char *hex);
 
