@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        //std::cin.getline(str_cons,1024);            // Считываем команду с консоли
+        //std::cin.getline(str_cons,1024);          // Считываем команду с консоли
         std::cin >> str_cons;
         // Проверка на непустое сообщение
         if (strlen(str_cons)==0)

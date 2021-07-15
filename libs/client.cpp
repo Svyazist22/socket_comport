@@ -13,6 +13,7 @@
 void Client::client_init()
 {
     Logger logger;
+
     // Создаем сокет сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
@@ -21,7 +22,6 @@ void Client::client_init()
         exit(0);
     }
  
-
     struct sockaddr_in serv_addr = {0};
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(64300);

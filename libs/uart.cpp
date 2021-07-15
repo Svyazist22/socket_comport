@@ -127,7 +127,5 @@ int Uart::uart_fd()
             }
         }
     }
-    
-    
     return fd;
 }
