@@ -17,7 +17,7 @@
 
 Logger logg;
 
-void Uart::uart_init(int fd){
+Uart::error_uart Uart::uart_init(int fd){
 
     struct termios tty;
     
@@ -47,8 +47,10 @@ void Uart::uart_init(int fd){
 
     if (tcsetattr(fd, TCSANOW, &tty) < 0)
     {
-        logg.err("Unable to set port parameters: %s",strerror(errno));     
+        logg.err("Unable to set port parameters: %s",strerror(errno));
+        return err_init;     
     }
+    return err_no;
 }
 
 
@@ -105,7 +107,7 @@ int Uart::uart_fd()
             std::cin >> command;    // Ввод выбора действия при ошибке открытия 
             switch (command)
             {
-            // Повтрорить открытие
+            // Поdторить открытие
             case 'r':                       
                 break;
 

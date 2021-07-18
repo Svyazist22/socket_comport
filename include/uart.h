@@ -18,10 +18,20 @@ class Uart
 public:
 
     /**
-     * @brief Инициализация USB<=>UART
-     * @param [in] fd       file descriptor 
+     * @brief Ошибки клиента
      */
-    void uart_init(int fd);
+    enum error_uart
+    {
+        err_no,             // Ошибок нет
+        err_init            // Ошибка сохраннения настроек
+    };
+   
+    /**
+     * @brief Инициализация USB<=>UART
+     * @param [in] fd       file descriptor
+     * @return Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было 
+     */
+    error_uart uart_init(int fd);
 
     /**
      * @brief Прослушивание UART и запись в fifo

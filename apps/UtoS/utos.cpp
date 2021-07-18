@@ -20,6 +20,8 @@ int main(int argc, char const *argv[])
     Client cl;
     Uart uart;
 
+    char command;
+
     int fd = uart.uart_fd();                        // Получаем fd компорта
   
     fifo_t fbuf; 
@@ -31,7 +33,35 @@ int main(int argc, char const *argv[])
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
     cl.client_init();                               // Инициализация клиента
-    uart.uart_init(fd);                             // Инициализация компорта
+
+    // Инициализация компорта
+    while (1)
+    {
+        if(uart.uart_init(fd) == uart.err_init)
+        {
+            printf("You can (r)epeat or (c)lose programm:");
+            command = '\0';
+            std::cin >> command;    // Ввод выбора действия при
+            switch (command)
+            {
+            // Повторить инициализацию
+            case 'r':                       
+                break;
+
+            // Закрыть программу
+            case 'c':                       
+                return 0;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    
+                                 
+
     fifo_init(&fbuf,fifo_buf,10240);                // Инициализация fifo-буффера
   
     while (1)
