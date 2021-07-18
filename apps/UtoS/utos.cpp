@@ -20,7 +20,8 @@ int main(int argc, char const *argv[])
     Client cl;
     Uart uart;
 
-    char command;
+    char command;                                   // Команда для действия при ошибке
+    int err;                                        // Код возврата ошибки
 
     int fd = uart.uart_fd();                        // Получаем fd компорта
   
@@ -35,7 +36,8 @@ int main(int argc, char const *argv[])
     // Инициализация клиента
     while (1)
     {
-        if((cl.client_init()  == cl.err_conn) || (cl.client_init()  == cl.err_sd))
+        err = cl.client_init();
+        if((err == cl.err_conn) || (err == cl.err_sd))
         {
             printf("You can (r)epeat or (c)lose programm:");
             std::cin >> command;  
@@ -58,7 +60,8 @@ int main(int argc, char const *argv[])
     // Инициализация компорта
     while (1)
     {
-        if(uart.uart_init(fd) == uart.err_init)
+        err = uart.uart_init(fd);
+        if( err == uart.err_init)
         {
             printf("You can (r)epeat or (c)lose programm:");
             std::cin >> command;
