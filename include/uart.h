@@ -18,7 +18,7 @@ class Uart
 public:
 
     /**
-     * @brief Ошибки клиента
+     * @brief Ошибки uart
      */
     enum error_uart
     {

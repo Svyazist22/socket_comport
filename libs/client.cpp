@@ -10,7 +10,7 @@
 #include <iostream>
 
 
-void Client::client_init()
+Client::error_client Client::client_init()
 {
     Logger logger;
 
@@ -19,7 +19,7 @@ void Client::client_init()
     if (sd ==-1)
     {
         logger.err("Error create socket: %s",strerror(errno));
-        exit(0);
+        return err_sd;
     }
  
     struct sockaddr_in serv_addr = {0};
@@ -34,9 +34,10 @@ void Client::client_init()
     if (connect_client ==-1)
     {
         logger.err("Error connect: %s",strerror(errno));
-        exit(0);
+        return err_conn;
     }
 
+    return err_no;
 }
 
 void Client::client_write(char* str)

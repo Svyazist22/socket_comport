@@ -32,24 +32,20 @@ int main(int argc, char const *argv[])
     char *h1 = new char[17];                        // Хэш отправленного сообщения
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
-    cl.client_init();                               // Инициализация клиента
-
-    // Инициализация компорта
+    // Инициализация клиента
     while (1)
     {
-        if(uart.uart_init(fd) == uart.err_init)
+        if((cl.client_init()  == cl.err_conn) || (cl.client_init()  == cl.err_sd))
         {
             printf("You can (r)epeat or (c)lose programm:");
-            command = '\0';
-            std::cin >> command;    // Ввод выбора действия при
+            std::cin >> command;  
             switch (command)
             {
-            // Повторить инициализацию
-            case 'r':                       
+            case 'r':               // Повторить инициализацию                      
                 break;
-
-            // Закрыть программу
-            case 'c':                       
+            case 'c':               // Закрыть программу          
+                return 0;
+            default:                // Закрыть программу при неверном символе
                 return 0;
             }
         }
@@ -59,15 +55,35 @@ int main(int argc, char const *argv[])
         }
     }
 
-    
-                                 
+    // Инициализация компорта
+    while (1)
+    {
+        if(uart.uart_init(fd) == uart.err_init)
+        {
+            printf("You can (r)epeat or (c)lose programm:");
+            std::cin >> command;
+            switch (command)
+            {
+            case 'r':               // Повторить инициализацию                
+                break;
+            case 'c':               // Закрыть программу                  
+                return 0;
+            default:                // Закрыть программу при неверном символе
+                return 0;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
 
-    fifo_init(&fbuf,fifo_buf,10240);                // Инициализация fifo-буффера
+    // Инициализация fifo-буффера
+    fifo_init(&fbuf,fifo_buf,10240);                
   
     while (1)
     {
         printf("Write command:");
-        //std::cin.getline(str_cons,1024);
         std::cin >> str_cons;                       // Считываем команду с консоли
         
         // Проверка на непустое сообщение

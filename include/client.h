@@ -20,9 +20,21 @@ class Client
 public:
 
     /**
-     * @brief Инициализация client
+     * @brief Ошибки клиентского приложения
      */
-    void client_init();
+    enum error_client
+    {
+        err_no,         // Ошибок нет
+        err_sd,         // Ошибка создание сокет-дискриптора
+        err_conn,       // Ошибка установки связи с сервером 
+
+    };
+
+    /**
+     * @brief Инициализация client
+     * @return Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было
+     */
+    error_client client_init();
 
     /**
      * @brief Отправляет данные client
