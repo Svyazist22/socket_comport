@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            break;
+            break;                  // Выйти из цикла инициализации, если ошибок нет
         }
     }
 
@@ -77,7 +77,7 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            break;
+            break;                  // Выйти из цикла инициализации, если ошибок нет
         }
     }
 
