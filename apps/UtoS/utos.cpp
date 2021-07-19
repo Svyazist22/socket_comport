@@ -87,8 +87,7 @@ int main(int argc, char const *argv[])
     while (1)
     {
         printf("Write command:");
-        std::cin >> str_cons;                       
-        
+        std::cin.getline(str_cons,64);                      
         // Проверка на непустое сообщение
         if (strlen(str_cons)==0)
         {
