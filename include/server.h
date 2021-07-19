@@ -26,18 +26,18 @@ class Server
 public:
 
     /**
-     * @brief Инициализация server
+     * @brief   Инициализация server
      */
     void serv_init();
 
     /**
-     * @brief Прослушивание client
-     * @return char* Возвращает указатель на полученное сообщение
+     * @brief   Прослушивание client
+     * @return  Возвращает указатель на полученное сообщение
      */
     char* serv_read();
 
     /**
-     * @brief Останавливает соединение
+     * @brief   Останавливает соединение
      */
     void serv_stop();
     

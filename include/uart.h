@@ -12,7 +12,6 @@
 
 #pragma once
 
-
 class Uart
 {
 public:

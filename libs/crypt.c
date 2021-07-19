@@ -2,7 +2,6 @@
 
 void create_hash(char *msg, size_t len,char* hex) 
 {
-   /*Хэширование Пирсона*/
    int i;
    int j;
    unsigned char h;
@@ -28,6 +27,7 @@ void create_hash(char *msg, size_t len,char* hex)
       43,119,224, 71,122,142, 42,160,104, 48,247,103, 15, 11,138,239    // 16
    };
 
+   /*Хэширование Пирсона*/
    for (j = 0; j < 8; ++j) 
    {
       h = T[(msg[0] + j) % 256];
@@ -37,6 +37,7 @@ void create_hash(char *msg, size_t len,char* hex)
       }
       hh[j] = h;
    }
+
    sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X\0",
    hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);   
 }

@@ -1,18 +1,17 @@
 /**
  * @file utos.cpp
  * @author Vladislav Bakanov
- * @brief Слушает UART, проверяет полученную информацию и отправляет на сокет результат
+ * @brief Слушает UART, проверяет полученную информацию
  * @version 0.1
  * @date 2021-07-06
  */
-
-#include "../../include/utos.h"
 
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
 #include <thread>
 
+#include "../../include/utos.h"
 
 int main(int argc, char const *argv[])
 {
@@ -20,13 +19,11 @@ int main(int argc, char const *argv[])
     Client cl;
     Uart uart;
 
-    char command;                                   // Команда для действия при ошибке
+    char command;                                   // Команда с консоли при ошибке
     int err;                                        // Код возврата ошибки
-
-    int fd = uart.uart_fd();                        // Получаем fd компорта
   
-    fifo_t fbuf; 
-    uint8_t *fifo_buf = new uint8_t;
+    fifo_t fifo_s;                                  // Объект fifo
+    uint8_t *fifo_buf = new uint8_t;                // Указатель на массив fifo   
     
     char *str_cons = new char[1024];                // Команда с консоли
     char *str_com = new char[1024];                 // Сообщение с компорта
@@ -57,6 +54,9 @@ int main(int argc, char const *argv[])
         }
     }
 
+    // Дискриптор компорта 
+    int fd = uart.uart_fd();                        
+
     // Инициализация компорта
     while (1)
     {
@@ -82,12 +82,12 @@ int main(int argc, char const *argv[])
     }
 
     // Инициализация fifo-буффера
-    fifo_init(&fbuf,fifo_buf,10240);                
+    fifo_init(&fifo_s,fifo_buf,10240);                
   
     while (1)
     {
         printf("Write command:");
-        std::cin >> str_cons;                       // Считываем команду с консоли
+        std::cin >> str_cons;                       
         
         // Проверка на непустое сообщение
         if (strlen(str_cons)==0)
@@ -109,8 +109,8 @@ int main(int argc, char const *argv[])
         
         sleep(1);                                   // Т.к. используется один компорт нужна задержка
      
-        uart.uart_receive(fd,&fbuf);                // Слушаем компорт и записываем в буффер
-        fifo_read_pop(&fbuf,str_com,1024);          // Берем из буффера полученное сообщение
+        uart.uart_receive(fd,&fifo_s);              // Слушаем компорт и записываем в буффер
+        fifo_read_pop(&fifo_s,str_com,1024);        // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
         create_hash(str_com,strlen(str_com),h2);    // Получаем хэш полученного сообщения
         

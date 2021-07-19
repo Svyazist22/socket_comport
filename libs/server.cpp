@@ -12,6 +12,7 @@
 void Server::serv_init()
 {
     Logger logger;
+    
     // Создаем сокет сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)

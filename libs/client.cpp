@@ -1,5 +1,3 @@
-#include "../include/client.h"
-
 #include <sys/socket.h>
 #include <sys/types.h>  
 #include <resolv.h>
@@ -9,12 +7,13 @@
 #include <stdlib.h>
 #include <iostream>
 
+#include "../include/client.h"
 
 Client::error_client Client::client_init()
 {
     Logger logger;
 
-    // Создаем сокет сокет-дескриптор
+    // Создаем сокет-дескриптор
     sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
     if (sd ==-1)
     {
@@ -26,10 +25,10 @@ Client::error_client Client::client_init()
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(64300);
 
-    // Преобразует str в нужный формат
+    // Преобразуем str в нужный формат
     inet_pton(AF_INET,"127.0.0.1",&serv_addr.sin_addr);
 
-    // Установление связи с сервером
+    // Устанавливаем связь с сервером
     connect_client = connect(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr));
     if (connect_client ==-1)
     {

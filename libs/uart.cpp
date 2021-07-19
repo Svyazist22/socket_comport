@@ -5,7 +5,6 @@
  * @version 0.1
  * @date 2021-06-28
  */
-#include "../include/uart.h"
 
 #include <fcntl.h>
 #include <termios.h>
@@ -14,6 +13,8 @@
 #include <iostream>
 #include <string.h>
 #include <fstream>
+
+#include "../include/uart.h"
 
 Logger logg;
 
@@ -53,7 +54,6 @@ Uart::error_uart Uart::uart_init(int fd){
     return err_no;
 }
 
-
 void Uart::uart_receive(int fd, fifo_t *buf)
 {
     char response[1024];
@@ -89,8 +89,8 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
 int Uart::uart_fd()
 {
     int fd = -1;
-    char addr[64] = "/dev/ttyUSB0"; // Стандартный путь
-    char command;                   // Выбор дейстия при ошибке
+    char addr[64] = "/dev/ttyUSB0"; // Стандартный путь до компорта
+    char command;                   // Команда с консоли при ошибке
 
     while (1)
     {
@@ -107,23 +107,19 @@ int Uart::uart_fd()
             std::cin >> command;    // Ввод выбора действия при ошибке открытия 
             switch (command)
             {
-            // Поdторить открытие
-            case 'r':                       
+            case 'r':               // Повторить открытие                  
                 break;
 
-            // Ввести новый адрес
-            case 'w':                       
+            case 'w':               // Ввести новый адрес                     
             printf("Addres (ex.:/dev/ttyUSB0):");
             std::cin >> addr;
                 break;
 
-            // Завершить программу
-            case 'c':
+            case 'c':               // Завершить программу
                 exit(EXIT_FAILURE);
                 break;
 
-            // Неверная команда завершает программу    
-            default:
+            default:                // Неверная команда завершает программу    
                 exit(EXIT_FAILURE);
                 break;
             }
