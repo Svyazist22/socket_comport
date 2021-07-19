@@ -1,4 +1,4 @@
-#include "../include/fifo.h"
+#include "../../include/cross_platform/fifo.h"
 
 #include <string.h>
 
@@ -6,7 +6,7 @@
 #include <util/atomic.h>
 #endif
 
-#include "../include/minmax.h"
+#include "../../include/linux/additional/minmax.h"
 
 // Инициализация FIFO
 void fifo_init (fifo_t* fifo, uint8_t *buff_ptr, uint_fifo_t buff_size)

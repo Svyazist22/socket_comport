@@ -2,6 +2,12 @@ OBJECTS = stou.o utos.o fifo.o logger.o uart.o server.o client.o crypt.o
 MAIN = ../apps/project/
 LIBS = ../libs/
 INC = ../include/
+CP = cross_platform/
+LINUX = linux/
+ADDIT = additional/
+COM = com_port/
+TL = transport_layer/
+
 CFLAGS = -c -Wall
 STOU = ../apps/StoU/
 UTOS = ../apps/UtoS/
@@ -17,29 +23,29 @@ utos: utos.o client.o logger.o uart.o fifo.o crypt.o
 	g++ utos.o client.o logger.o uart.o fifo.o crypt.o -o utos
 
 
-stou.o: $(STOU)stou.cpp $(LIBS)server.cpp $(LIBS)uart.cpp
-	g++ $(CFLAGS) $(STOU)stou.cpp $(LIBS)server.cpp $(LIBS)uart.cpp
+stou.o: $(STOU)stou.cpp $(LIBS)$(LINUX)$(TL)server.cpp $(LIBS)$(LINUX)$(COM)uart.cpp
+	g++ $(CFLAGS) $(STOU)stou.cpp $(LIBS)$(LINUX)$(TL)server.cpp $(LIBS)$(LINUX)$(COM)uart.cpp
 
-utos.o: $(UTOS)utos.cpp $(LIBS)client.cpp 
-	g++ $(CFLAGS) $(UTOS)utos.cpp $(LIBS)client.cpp
+utos.o: $(UTOS)utos.cpp $(LIBS)$(LINUX)$(TL)client.cpp 
+	g++ $(CFLAGS) $(UTOS)utos.cpp $(LIBS)$(LINUX)$(TL)client.cpp
 
-fifo.o: $(LIBS)fifo.c
-	g++ $(CFLAGS) $(LIBS)fifo.c
+fifo.o: $(LIBS)$(CP)fifo.c
+	g++ $(LIBS)$(CP)fifo.c
 
-logger.o: $(LIBS)logger.cpp
-	g++ $(CFLAGS) $(LIBS)logger.cpp
+logger.o: $(LIBS)$(LINUX)$(ADDIT)logger.cpp
+	g++ $(CFLAGS) $(LIBS)$(LINUX)$(ADDIT)logger.cpp
 
-uart.o: $(LIBS)uart.cpp $(LIBS)fifo.c $(LIBS)logger.cpp $(LIBS)crypt.c
-	g++ $(CFLAGS) $(LIBS)uart.cpp $(LIBS)fifo.c $(LIBS)logger.cpp $(LIBS)crypt.c
+uart.o: $(LIBS)$(LINUX)$(COM)uart.cpp $(LIBS)$(CP)fifo.c $(LIBS)$(LINUX)$(ADDIT)logger.cpp $(LIBS)$(CP)crypt.c
+	g++ $(CFLAGS) $(LIBS)$(LINUX)$(COM)uart.cpp $(LIBS)$(CP)fifo.c $(LIBS)$(LINUX)$(ADDIT)logger.cpp $(LIBS)$(CP)crypt.c
 
-client.o: $(LIBS)client.cpp $(LIBS)logger.cpp
-	g++ $(CFLAGS) $(LIBS)client.cpp $(LIBS)logger.cpp
+client.o: $(LIBS)$(LINUX)$(TL)client.cpp $(LIBS)$(LINUX)$(ADDIT)logger.cpp
+	g++ $(CFLAGS) $(LIBS)$(LINUX)$(TL)client.cpp $(LIBS)$(LINUX)$(ADDIT)logger.cpp
 
-server.o: $(LIBS)server.cpp $(LIBS)logger.cpp
-	g++ $(CFLAGS) $(LIBS)server.cpp $(LIBS)logger.cpp
+server.o: $(LIBS)$(LINUX)$(TL)server.cpp $(LIBS)$(LINUX)$(ADDIT)logger.cpp
+	g++ $(CFLAGS) $(LIBS)$(LINUX)$(TL)server.cpp $(LIBS)$(LINUX)$(ADDIT)logger.cpp
 
-crypt.o: $(LIBS)crypt.c
-	g++ $(CFLAGS) $(LIBS)crypt.c
+crypt.o: $(LIBS)$(CP)crypt.c
+	g++ $(CFLAGS) $(LIBS)$(CP)crypt.c
 
 
 

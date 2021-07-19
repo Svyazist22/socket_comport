@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <thread>
 
-#include "../../include/utos.h"
+#include "../../include/app/utos.h"
 
 int main(int argc, char const *argv[])
 {

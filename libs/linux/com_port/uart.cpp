@@ -14,7 +14,7 @@
 #include <string.h>
 #include <fstream>
 
-#include "../include/uart.h"
+#include "../../../include/linux/com_port/uart.h"
 
 Logger logg;
 

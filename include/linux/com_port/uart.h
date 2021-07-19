@@ -6,9 +6,9 @@
  * @date 2021-06-28
  */
 
-#include "fifo.h"
-#include "logger.h"
-#include "crypt.h"
+#include "../../cross_platform/fifo.h"
+#include "../additional/logger.h"
+#include "../../cross_platform/crypt.h"
 
 #pragma once
 

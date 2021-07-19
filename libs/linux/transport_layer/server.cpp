@@ -1,5 +1,3 @@
-#include "../include/server.h"
-
 #include <sys/socket.h>
 #include <sys/types.h>  
 #include <resolv.h>
@@ -8,6 +6,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <iostream>
+
+#include "../../../include/linux/transport_layer/server.h"
 
 void Server::serv_init()
 {

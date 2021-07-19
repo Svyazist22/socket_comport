@@ -1,4 +1,4 @@
-#include "../include/crypt.h"
+#include "../../include/cross_platform/crypt.h"
 
 void create_hash(char *msg, size_t len,char* hex) 
 {
