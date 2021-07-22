@@ -104,7 +104,8 @@ int Uart::uart_fd()
             logg.err("Open ERROR %s: %s",addr,strerror(errno));
             printf("You can (r)epeat, (w)rite new addres, (c)lose programm:");
             command = '\0';
-            std::cin >> command;    // Ввод выбора действия при ошибке открытия 
+            std::cin >> command;    // Ввод выбора действия при ошибке открытия
+            command = (char)tolower(command);   
             switch (command)
             {
             case 'r':               // Повторить открытие                  

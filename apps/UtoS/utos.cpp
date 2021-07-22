@@ -2,7 +2,7 @@
  * @file utos.cpp
  * @author Vladislav Bakanov
  * @brief Слушает UART, проверяет полученную информацию
- * @version 0.1
+ * @version 0.2
  * @date 2021-07-06
  */
 
@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 {
     Logger log;
     Client cl;
-    Uart uart;
+    Uart uart; 
 
     char command;                                   // Команда с консоли при ошибке
     int err;                                        // Код возврата ошибки
@@ -37,7 +37,8 @@ int main(int argc, char const *argv[])
         if((err == cl.err_conn) || (err == cl.err_sd))
         {
             printf("You can (r)epeat or (c)lose programm:");
-            std::cin >> command;  
+            std::cin >> command;
+            command = (char)tolower(command); 
             switch (command)
             {
             case 'r':               // Повторить инициализацию                      
@@ -65,6 +66,7 @@ int main(int argc, char const *argv[])
         {
             printf("You can (r)epeat or (c)lose programm:");
             std::cin >> command;
+            command = (char)tolower(command); 
             switch (command)
             {
             case 'r':               // Повторить инициализацию                
