@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <thread>
+#include <ctime>
 
 #include "../../include/app/utos.h"
 
@@ -21,6 +22,9 @@ int main(int argc, char const *argv[])
 
     char command;                                   // Команда с консоли при ошибке
     int err;                                        // Код возврата ошибки
+
+    clock_t start_time = 0;
+    clock_t end_time = 0;
   
     fifo_t fifo_s;                                  // Объект fifo
     uint8_t *fifo_buf = new uint8_t;                // Указатель на массив fifo   
@@ -97,6 +101,8 @@ int main(int argc, char const *argv[])
             continue;
         }
         
+        start_time = clock();
+        
         cl.client_write(str_cons);                  // Отправляем на компорт
         create_hash(str_cons,strlen(str_cons),h1);  // Получаем хэш отправленного сообщения
 
@@ -111,6 +117,7 @@ int main(int argc, char const *argv[])
         sleep(1);                                   // Т.к. используется один компорт нужна задержка
      
         uart.uart_receive(fd,&fifo_s);              // Слушаем компорт и записываем в буффер
+        end_time = clock();
         fifo_read_pop(&fifo_s,str_com,1024);        // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
         create_hash(str_com,strlen(str_com),h2);    // Получаем хэш полученного сообщения
@@ -124,6 +131,8 @@ int main(int argc, char const *argv[])
         {
             log.err("The messages are different!");
         }
+
+        log.info("Time: %lf ms",(double)(end_time-start_time)* 1000.0 / CLOCKS_PER_SEC);
     }
     
     return 0;
