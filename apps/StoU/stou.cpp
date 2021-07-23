@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 
     char* buf = new char;
 
-    int fd = uart.uart_fd();
+    int fd = uart.uartFd();
     if ( fd < 0 )
     {
         return 0;
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     serv.serv_init(); 
 
     //Инициализация компорта
-    uart.uart_init(fd); 
+    uart.uartInit(fd); 
 
     while(1)
     {
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
         if (strlen(buf)>0)
         {
             log.info("Message received:%s",buf); 
-            uart.uart_transmit(fd,buf,strlen(buf)); //Отправляем на компорт
+            uart.uartTransmit(fd,buf,strlen(buf)); //Отправляем на компорт
         }
     }
     

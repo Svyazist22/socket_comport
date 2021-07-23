@@ -66,20 +66,24 @@ int main(int argc, char const *argv[])
     }
 
     // Дискриптор ком-порта 
-    int fd = uart.uart_fd();                        
+    int fd = uart.uartFd();                        
 
     // Инициализация компорта
+    uart.uartInit(fd);
+
+    // Проверка инициализации
     while (1)
     {
-        err = uart.uart_init(fd);
-        if( err == uart.err_init)
+        if(uart.getError() == uart.err_init)
         {
-            printf("You can (r)epeat or (c)lose programm:");
+            log.err("Unable to set port parameters: %s",strerror(errno));
+            std::cout<<("You can (r)epeat or (c)lose programm:");
             std::cin >> command;
             command = (char)tolower(command); 
             switch (command)
             {
-            case 'r':               // Повторить инициализацию                
+            case 'r':               // Повторить инициализацию
+            uart.uartInit(fd);              
                 break;
             case 'c':               // Закрыть программу                  
                 return 0;
@@ -122,7 +126,7 @@ int main(int argc, char const *argv[])
         
         sleep(1);                                   // Т.к. используется один компорт нужна задержка
      
-        uart.uart_receive(fd,&fifo_s);              // Слушаем компорт и записываем в буффер
+        uart.uartReceive(fd,&fifo_s);              // Слушаем компорт и записываем в буффер
         end_time = clock();
         fifo_read_pop(&fifo_s,str_com,1024);        // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);

@@ -18,7 +18,7 @@
 
 Logger logg;
 
-Uart::error_uart Uart::uart_init(int fd){
+void Uart::uartInit(int fd){
 
     struct termios tty;
     
@@ -45,16 +45,10 @@ Uart::error_uart Uart::uart_init(int fd){
     tty.c_oflag &= ~ONLCR;                  // Запретить преобразование новой строки в возврат каретки
 
     cfmakeraw(&tty);
-
-    if (tcsetattr(fd, TCSANOW, &tty) < 0)
-    {
-        logg.err("Unable to set port parameters: %s",strerror(errno));
-        return err_init;     
-    }
-    return err_no;
+    set_error = tcsetattr(fd, TCSANOW, &tty);
 }
 
-void Uart::uart_receive(int fd, fifo_t *buf)
+void Uart::uartReceive(int fd, fifo_t *buf)
 {
     char response[1024];
     memset(response, '\0', sizeof(response));
@@ -74,7 +68,7 @@ void Uart::uart_receive(int fd, fifo_t *buf)
     }
 }
 
-void Uart::uart_transmit(int fd, char* str,size_t size)
+void Uart::uartTransmit(int fd, char* str,size_t size)
 {
     if (write(fd,str,size) == -1)
     {
@@ -86,7 +80,7 @@ void Uart::uart_transmit(int fd, char* str,size_t size)
     }
 }
 
-int Uart::uart_fd()
+int Uart::uartFd()
 {
     int fd = -1;
     char addr[64] = "/dev/ttyUSB0"; // Стандартный путь до компорта
@@ -127,4 +121,16 @@ int Uart::uart_fd()
         }
     }
     return fd;
+}
+
+Uart::errorUart Uart::getError()
+{
+    if (set_error < 0)
+    {
+        return err_init;     
+    }
+    else
+    {
+        return err_no;
+    }
 }
