@@ -23,7 +23,7 @@ public:
     /**
      * @brief   Ошибки клиентского приложения
      */
-    enum error_client
+    enum errorClient
     {
         err_no,         // Ошибок нет
         err_sd,         // Ошибка создание сокет-дискриптора
@@ -32,18 +32,23 @@ public:
 
     /**
      * @brief   Инициализация client
-     * @return  Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было
      */
-    error_client client_init();
+    void clientInit();
 
     /**
      * @brief   Отправляет данные client
      * @param [in] str Указатель на сообщение
      */
-    void client_write(char* str);
+    void clientWrite(char* str);
 
     /**
      * @brief   Останавливает соединение с сервером
      */
-    void client_stop();
+    void clientStop();
+
+    /**
+     * @brief   Возвращает код ошибки
+     * @return  Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было
+     */
+    errorClient getError();
 };

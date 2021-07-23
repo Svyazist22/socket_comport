@@ -19,7 +19,6 @@ int main(int argc, char const *argv[])
     Logger log;
     Client cl;
     Uart uart; 
-
     char command;                                   // Команда с консоли при ошибке
     int err;                                        // Код возврата ошибки
 
@@ -28,38 +27,45 @@ int main(int argc, char const *argv[])
   
     fifo_t fifo_s;                                  // Объект fifo
     uint8_t *fifo_buf = new uint8_t;                // Указатель на массив fifo   
-    
+
     char *str_cons = new char[1024];                // Команда с консоли
     char *str_com = new char[1024];                 // Сообщение с компорта
     char *h1 = new char[17];                        // Хэш отправленного сообщения
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
     // Инициализация клиента
-    while (1)
+    cl.clientInit();
+    
+    // Проверка инициализации
+    while (cl.getError() != cl.err_no)
     {
-        err = cl.client_init();
-        if((err == cl.err_conn) || (err == cl.err_sd))
+        err = cl.getError();    // Получаем код ошибки
+
+        if(err == cl.err_sd)
         {
-            printf("You can (r)epeat or (c)lose programm:");
-            std::cin >> command;
-            command = (char)tolower(command); 
-            switch (command)
-            {
-            case 'r':               // Повторить инициализацию                      
-                break;
-            case 'c':               // Закрыть программу          
-                return 0;
-            default:                // Закрыть программу при неверном символе
-                return 0;
-            }
+            log.err("Error create socket: %s",strerror(errno));
         }
-        else
+        else if(err == cl.err_conn)
         {
-            break;                  // Выйти из цикла инициализации, если ошибок нет
+            log.err("Error create connect: %s",strerror(errno));
+        }
+
+        std::cout << ("You can (r)epeat or (c)lose programm:");
+        std::cin >> command;
+        command = (char)tolower(command); 
+        switch (command)
+        {
+        case 'r':               // Повторить инициализацию 
+            cl.clientInit();                   
+            break;
+        case 'c':               // Завершить программу          
+            return 0;
+        default:                // Завершить программу при неверном символе
+            return 0;
         }
     }
 
-    // Дискриптор компорта 
+    // Дискриптор ком-порта 
     int fd = uart.uart_fd();                        
 
     // Инициализация компорта
@@ -103,13 +109,13 @@ int main(int argc, char const *argv[])
         
         start_time = clock();
         
-        cl.client_write(str_cons);                  // Отправляем на компорт
+        cl.clientWrite(str_cons);                  // Отправляем на компорт
         create_hash(str_cons,strlen(str_cons),h1);  // Получаем хэш отправленного сообщения
 
         // Команда остановки программ
         if (strcmp(str_cons,"stop")==0)
         {
-            cl.client_stop();
+            cl.clientStop();
             log.err("The program is stopped!");
             return 0;
         }
