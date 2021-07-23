@@ -34,10 +34,10 @@ int main(int argc, char const *argv[])
     char *h2 = new char[17];                        // Хэш полученного сообщения
 
     // Инициализация клиента
-    cl.clientInit();
+    cl.clientInit ();
     
     // Проверка инициализации
-    while (cl.getError() != cl.err_no)
+    while (cl.getError () != cl.err_no)
     {
         err = cl.getError();    // Получаем код ошибки
 
@@ -50,7 +50,7 @@ int main(int argc, char const *argv[])
             log.err("Error create connect: %s",strerror(errno));
         }
 
-        std::cout << ("You can (r)epeat or (c)lose programm:");
+        std::cout << "You can (r)epeat or (c)lose programm:";
         std::cin >> command;
         command = (char)tolower(command); 
         switch (command)
@@ -63,12 +63,14 @@ int main(int argc, char const *argv[])
             delete str_cons;
             delete h1;
             delete h2;
+            cl.clientStop();
             return 0;
         default:                // Завершить программу при неверном символе
             delete str_com;
             delete str_cons;
             delete h1;
             delete h2;
+            cl.clientStop();
             return 0;
         }
     }
@@ -85,7 +87,7 @@ int main(int argc, char const *argv[])
         if(uart.getError() == uart.err_init)
         {
             log.err("Unable to set port parameters: %s",strerror(errno));
-            std::cout<<("You can (r)epeat or (c)lose programm:");
+            std::cout<<"You can (r)epeat or (c)lose programm:";
             std::cin >> command;
             command = (char)tolower(command); 
             switch (command)
@@ -98,12 +100,14 @@ int main(int argc, char const *argv[])
                 delete str_cons;
                 delete h1;
                 delete h2;
+                cl.clientStop();
                 return 0;
             default:                // Завершить программу при неверном символе
                 delete str_com;
                 delete str_cons;
                 delete h1;
                 delete h2;
+                cl.clientStop();
                 return 0;
             }
         }
@@ -125,20 +129,19 @@ int main(int argc, char const *argv[])
         
         start_time = clock();
         
-        cl.clientWrite(str_cons);                  // Отправляем на компорт
+        cl.clientWrite(str_cons);                   // Отправляем на компорт
         create_hash(str_cons,strlen(str_cons),h1);  // Получаем хэш отправленного сообщения
-
+    
         // Команда остановки программ
         if (strcmp(str_cons,"stop")==0)
         {
-            cl.clientStop();
             log.err("The program is stopped!");
-            return 0;
+            break;
         }
         
         sleep(1);                                   // Т.к. используется один компорт нужна задержка
      
-        uart.uartReceive(fd,&fifo_s);              // Слушаем компорт и записываем в буффер
+        uart.uartReceive(fd,&fifo_s);               // Слушаем компорт и записываем в буффер
         end_time = clock();
         fifo_read_pop(&fifo_s,str_com,1024);        // Берем из буффера полученное сообщение
         log.info("Message received from UART:%s",str_com);
@@ -156,6 +159,11 @@ int main(int argc, char const *argv[])
 
         log.info("Time: %lf ms",(double)(end_time-start_time)* 1000.0 / CLOCKS_PER_SEC);
     }
-    
+
+    //delete [] str_cons;
+    delete [] str_com;
+    delete [] h1;
+    delete [] h2;
+    cl.clientStop();
     return 0;
 }
