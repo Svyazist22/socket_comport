@@ -58,9 +58,17 @@ int main(int argc, char const *argv[])
         case 'r':               // Повторить инициализацию 
             cl.clientInit();                   
             break;
-        case 'c':               // Завершить программу          
+        case 'c':               // Завершить программу
+            delete str_com;
+            delete str_cons;
+            delete h1;
+            delete h2;
             return 0;
         default:                // Завершить программу при неверном символе
+            delete str_com;
+            delete str_cons;
+            delete h1;
+            delete h2;
             return 0;
         }
     }
@@ -72,7 +80,7 @@ int main(int argc, char const *argv[])
     uart.uartInit(fd);
 
     // Проверка инициализации
-    while (1)
+    while (uart.getError() != uart.err_no)
     {
         if(uart.getError() == uart.err_init)
         {
@@ -85,15 +93,19 @@ int main(int argc, char const *argv[])
             case 'r':               // Повторить инициализацию
             uart.uartInit(fd);              
                 break;
-            case 'c':               // Закрыть программу                  
+            case 'c':               // Завершить программу                  
+                delete str_com;
+                delete str_cons;
+                delete h1;
+                delete h2;
                 return 0;
-            default:                // Закрыть программу при неверном символе
+            default:                // Завершить программу при неверном символе
+                delete str_com;
+                delete str_cons;
+                delete h1;
+                delete h2;
                 return 0;
             }
-        }
-        else
-        {
-            break;                  // Выйти из цикла инициализации, если ошибок нет
         }
     }
 
