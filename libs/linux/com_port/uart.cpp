@@ -18,13 +18,13 @@
 
 Logger logg;
 
-void Uart::uartInit(int fd){
+void Uart::uartInit (int fd){
 
     struct termios tty;
     
-    tcgetattr(fd,&tty);                     // Получение стандартных настроек
+    tcgetattr (fd, &tty);                   // Получение стандартных настроек
 
-    cfsetspeed(&tty, B9600);                // Скорость приема и передачи
+    cfsetspeed (&tty, B9600);               // Скорость приема и передачи
 
     tty.c_cflag     &=  ~PARENB;            // Бит четности выключен       
     tty.c_cflag     &=  ~CSTOPB;            // Стоп бит один
@@ -44,39 +44,39 @@ void Uart::uartInit(int fd){
     tty.c_oflag &= ~OPOST;                  // Отключить преобразование выходных символов
     tty.c_oflag &= ~ONLCR;                  // Запретить преобразование новой строки в возврат каретки
 
-    cfmakeraw(&tty);
-    set_error = tcsetattr(fd, TCSANOW, &tty);
+    cfmakeraw (&tty);
+    setResult = tcsetattr (fd, TCSANOW, &tty);
 }
 
 void Uart::uartReceive(int fd, fifo_t *buf)
 {
     char response[1024];
-    memset(response, '\0', sizeof(response));
+    memset(response, '\0', sizeof (response));
 
     //fcntl(fd, F_SETFL, FNDELAY);
     read(fd, response, 1024);
 
     //tcflush( fd, TCIFLUSH );
 
-    if (fifo_free(buf)>=1024)
+    if (fifo_free (buf) >= 1024)
     {
-        fifo_write_push(buf,response,1024);        
+        fifo_write_push (buf, response, 1024);        
     }
     else
     {
-        logg.err("The buffer is ful");
+        logg.err ("The buffer is ful");
     }
 }
 
-void Uart::uartTransmit(int fd, char* str,size_t size)
+void Uart::uartTransmit (int fd, char* str, size_t size)
 {
-    if (write(fd,str,size) == -1)
+    if (write (fd, str, size) == -1)
     {
-        logg.err("Write error! %s",strerror(errno));
+        logg.err ("Write error! %s", strerror (errno));
     }
     else
     {
-        logg.info("The message was sent to the UART");
+        logg.info ("The message was sent to the UART");
     }
 }
 
@@ -95,27 +95,27 @@ int Uart::uartFd()
         }
         else
         {
-            logg.err("Open ERROR %s: %s",addr,strerror(errno));
-            printf("You can (r)epeat, (w)rite new addres, (c)lose programm:");
+            logg.err ("Open ERROR %s: %s", addr, strerror (errno));
+            printf ("You can (r)epeat, (w)rite new addres, (c)lose programm:");
             command = '\0';
             std::cin >> command;    // Ввод выбора действия при ошибке открытия
-            command = (char)tolower(command);   
+            command = (char) tolower (command);   
             switch (command)
             {
             case 'r':               // Повторить открытие                  
                 break;
 
             case 'w':               // Ввести новый адрес                     
-            printf("Addres (ex.:/dev/ttyUSB0):");
+            printf ("Addres (ex.:/dev/ttyUSB0):");
             std::cin >> addr;
                 break;
 
             case 'c':               // Завершить программу
-                exit(EXIT_FAILURE);
+                exit (EXIT_FAILURE);
                 break;
 
             default:                // Неверная команда завершает программу    
-                exit(EXIT_FAILURE);
+                exit (EXIT_FAILURE);
                 break;
             }
         }
@@ -125,12 +125,12 @@ int Uart::uartFd()
 
 Uart::errorUart Uart::getError()
 {
-    if (set_error < 0)
+    if (setResult < 0)
     {
-        return err_init;     
+        return errInit;     
     }
     else
     {
-        return err_no;
+        return errNo;
     }
 }

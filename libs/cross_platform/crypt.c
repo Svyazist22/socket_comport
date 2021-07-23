@@ -2,7 +2,7 @@
 
 void create_hash(char *msg, size_t len,char* hex) 
 {
-   int i;
+   size_t i;
    int j;
    unsigned char h;
    unsigned char hh[8];
@@ -38,7 +38,7 @@ void create_hash(char *msg, size_t len,char* hex)
       hh[j] = h;
    }
 
-   sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X\0",
+   sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X",
    hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);   
 }
 

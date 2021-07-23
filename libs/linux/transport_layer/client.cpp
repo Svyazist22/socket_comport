@@ -14,23 +14,22 @@ void Client::clientInit()
     Logger logger;
 
     // Создаем сокет-дескриптор
-    sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
+    sd = socket (AF_INET,SOCK_STREAM, 0); //ipv4 tsp
 
     struct sockaddr_in serv_addr = {0};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(64300);
+    serv_addr.sin_port = htons (64300);
 
     // Преобразуем str в нужный формат
-    inet_pton(AF_INET,"127.0.0.1",&serv_addr.sin_addr);
+    inet_pton (AF_INET, "127.0.0.1", &serv_addr.sin_addr);
 
     // Устанавливаем связь с сервером
-    connect_client = connect(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr));
-
+    connectClient = connect (sd,(struct sockaddr *) &serv_addr, sizeof (serv_addr));
 }
 
-void Client::clientWrite(char* str)
+void Client::clientWrite (char* str)
 {
-    write(sd,str,strlen(str));
+    write(sd, str, strlen (str));
 }
 
 void Client::clientStop()
@@ -42,15 +41,15 @@ Client::errorClient Client::getError()
 {
     if (sd ==-1)
     {
-        return err_sd; 
+        return errSd; 
     } 
-    else if (connect_client ==-1)
+    else if (connectClient ==-1)
     {
-        return err_conn;
+        return errConn;
     }
     else
     {
-        return err_no;
+        return errNo;
     }
 }
 

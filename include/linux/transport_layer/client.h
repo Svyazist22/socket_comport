@@ -16,7 +16,7 @@ class Client
     int sd;
 
     /// Код возврата связывания сокета с server
-    int connect_client;
+    int connectClient;
 
 public:
 
@@ -25,9 +25,9 @@ public:
      */
     enum errorClient
     {
-        err_no,         // Ошибок нет
-        err_sd,         // Ошибка создание сокет-дискриптора
-        err_conn,       // Ошибка установки связи с сервером 
+        errNo,         // Ошибок нет
+        errSd,         // Ошибка создание сокет-дискриптора
+        errConn,       // Ошибка установки связи с сервером 
     };
 
     /**
@@ -39,7 +39,7 @@ public:
      * @brief   Отправляет данные client
      * @param [in] str Указатель на сообщение
      */
-    void clientWrite(char* str);
+    void clientWrite (char* str);
 
     /**
      * @brief   Останавливает соединение с сервером

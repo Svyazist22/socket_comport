@@ -15,7 +15,7 @@
 class Uart
 {
 
-    int set_error;          // Результат сохранения настроек UART
+    int setResult;          // Результат сохранения настроек UART
 
 public:
 
@@ -24,8 +24,8 @@ public:
      */
     enum errorUart
     {
-        err_no,             // Ошибок нет
-        err_init            // Ошибка сохраннения настроек
+        errNo,             // Ошибок нет
+        errInit            // Ошибка сохраннения настроек
     };
    
     /**
