@@ -21,6 +21,7 @@ int main(int argc, char const *argv[])
     Uart uart; 
     char command;                                   // Команда с консоли при ошибке
     int err;                                        // Код возврата ошибки
+    bool running = true;                            // Условие работы программы
 
     clock_t start_time = 0;
     clock_t end_time = 0;
@@ -116,7 +117,7 @@ int main(int argc, char const *argv[])
     // Инициализация fifo-буффера
     fifo_init (&fifo_s, fifo_buf, 10240);                
   
-    while (1)
+    while (running)
     {
         printf ("Write command:");
         std::cin.getline (str_cons,64);                      
@@ -136,6 +137,7 @@ int main(int argc, char const *argv[])
         if (strcmp (str_cons, "stop") == 0)
         {
             log.err ("The program is stopped!");
+            running = false;
             break;
         }
         
@@ -143,7 +145,7 @@ int main(int argc, char const *argv[])
      
         uart.uartReceive (fd, &fifo_s);                 // Слушаем компорт и записываем в буффер
         end_time = clock();
-        fifo_read_pop (&fifo_s,str_com, 1024);          // Берем из буффера полученное сообщение
+        fifo_read_pop (&fifo_s, str_com, 1024);          // Берем из буффера полученное сообщение
         log.info ("Message received from UART:%s", str_com);
         create_hash (str_com, strlen (str_com), h2);    // Получаем хэш полученного сообщения
         
@@ -161,7 +163,7 @@ int main(int argc, char const *argv[])
     }
 
     //delete [] str_cons;
-    delete [] str_com;
+    //delete [] str_com;
     delete [] h1;
     delete [] h2;
     delete [] fifo_buf;
