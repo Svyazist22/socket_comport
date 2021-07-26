@@ -38,17 +38,17 @@ int main(int argc, char const *argv[])
     cl.clientInit ();
     
     // Проверка инициализации
-    while (cl.getError() != cl.errNo)
+    while (cl.getError () != cl.errNo)
     {
-        err = cl.getError();    // Получаем код ошибки
+        err = cl.getError ();    // Получаем код ошибки
 
         if(err == cl.errSd)
         {
-            log.err("Error create socket: %s",strerror (errno));
+            log.err("Error create socket: %s", strerror (errno));
         }
         else if(err == cl.errConn)
         {
-            log.err("Error create connect: %s",strerror (errno));
+            log.err("Error create connect: %s", strerror (errno));
         }
 
         std::cout << "You can (r)epeat or (c)lose programm:";
@@ -57,40 +57,40 @@ int main(int argc, char const *argv[])
         switch (command)
         {
         case 'r':               // Повторить инициализацию 
-            cl.clientInit();                   
+            cl.clientInit ();                   
             break;
         case 'c':               // Завершить программу
             delete str_com;
             delete str_cons;
             delete h1;
             delete h2;
-            cl.clientStop();
+            cl.clientStop ();
             return 0;
         default:                // Завершить программу при неверном символе
             delete str_com;
             delete str_cons;
             delete h1;
             delete h2;
-            cl.clientStop();
+            cl.clientStop ();
             return 0;
         }
     }
 
     // Дискриптор ком-порта 
-    int fd = uart.uartFd();                        
+    int fd = uart.uartFd ();                        
 
     // Инициализация компорта
     uart.uartInit (fd);
 
     // Проверка инициализации
-    while (uart.getError() != uart.errNo)
+    while (uart.getError () != uart.errNo)
     {
-        if(uart.getError() == uart.errInit)
+        if(uart.getError () == uart.errInit)
         {
             log.err("Unable to set port parameters: %s", strerror (errno));
             std::cout<<"You can (r)epeat or (c)lose programm:";
             std::cin >> command;
-            command = (char) tolower( command); 
+            command = (char) tolower (command); 
             switch (command)
             {
             case 'r':               // Повторить инициализацию
@@ -101,14 +101,14 @@ int main(int argc, char const *argv[])
                 delete str_cons;
                 delete h1;
                 delete h2;
-                cl.clientStop();
+                cl.clientStop ();
                 return 0;
             default:                // Завершить программу при неверном символе
                 delete str_com;
                 delete str_cons;
                 delete h1;
                 delete h2;
-                cl.clientStop();
+                cl.clientStop ();
                 return 0;
             }
         }
@@ -128,7 +128,7 @@ int main(int argc, char const *argv[])
             continue;
         }
         
-        start_time = clock();
+        start_time = clock ();
         
         cl.clientWrite (str_cons);                      // Отправляем на компорт
         create_hash (str_cons, strlen (str_cons), h1);  // Получаем хэш отправленного сообщения
@@ -144,7 +144,7 @@ int main(int argc, char const *argv[])
         sleep(1);                                       // Т.к. используется один компорт нужна задержка
      
         uart.uartReceive (fd, &fifo_s);                 // Слушаем компорт и записываем в буффер
-        end_time = clock();
+        end_time = clock ();
         fifo_read_pop (&fifo_s, str_com, 1024);          // Берем из буффера полученное сообщение
         log.info ("Message received from UART:%s", str_com);
         create_hash (str_com, strlen (str_com), h2);    // Получаем хэш полученного сообщения
@@ -167,6 +167,6 @@ int main(int argc, char const *argv[])
     delete [] h1;
     delete [] h2;
     delete [] fifo_buf;
-    cl.clientStop();
+    cl.clientStop ();
     return 0;
 }

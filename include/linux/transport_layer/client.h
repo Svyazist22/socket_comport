@@ -33,7 +33,7 @@ public:
     /**
      * @brief   Инициализация client
      */
-    void clientInit();
+    void clientInit ();
 
     /**
      * @brief   Отправляет данные client
@@ -44,11 +44,11 @@ public:
     /**
      * @brief   Останавливает соединение с сервером
      */
-    void clientStop();
+    void clientStop ();
 
     /**
      * @brief   Возвращает код ошибки
      * @return  Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было
      */
-    errorClient getError();
+    errorClient getError ();
 };

@@ -28,18 +28,18 @@ public:
     /**
      * @brief   Инициализация server
      */
-    void serv_init();
+    void serv_init ();
 
     /**
      * @brief   Прослушивание client
      * @return  Возвращает указатель на полученное сообщение
      */
-    char* serv_read();
+    char* serv_read ();
 
     /**
      * @brief   Останавливает соединение
      */
-    void serv_stop();
+    void serv_stop ();
     
 };
 

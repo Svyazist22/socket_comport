@@ -15,7 +15,7 @@
  * @param [in] len      Длина сообщения
  * @param [in,out] hex  Указатель на массив для записи хэша 
  */
-void create_hash(char *msg, size_t len, char *hex);
+void create_hash (char *msg, size_t len, char *hex);
 
 
 /**
@@ -24,5 +24,5 @@ void create_hash(char *msg, size_t len, char *hex);
  * @param [in] h2 Указатель на второй хэш
  * @return true если они одинаковые, иначе false
  */
-bool compare_hash(char* h1,char* h2);
+bool compare_hash (char* h1,char* h2);
 

@@ -32,14 +32,14 @@ public:
      * @brief Инициализация USB<=>UART
      * @param [in] fd       file descriptor
      */
-    void uartInit(int fd);
+    void uartInit (int fd);
 
     /**
      * @brief Прослушивание UART и запись в fifo
      * @param [in] fd       file descriptor 
      * @param [in,out] buf  Указаель на массив для записи полученных данных
      */
-    void uartReceive(int fd,fifo_t *buf);
+    void uartReceive (int fd, fifo_t *buf);
 
     /**
      * @brief Отправка данных на UART
@@ -47,19 +47,19 @@ public:
      * @param [in] str      Указатель на отправляемое сообщение
      * @param [in] size     Размер сообщения
      */
-    void uartTransmit(int fd, char* str,size_t size);
+    void uartTransmit (int fd, char* str, size_t size);
 
     /**
      * @brief Устанавливает связь между файлом компорта и файловым дискриптером
      * @return file descriptor  
      */
-    int uartFd();
+    int uartFd ();
 
     /**
      * @brief   Возвращает код ошибки
      * @return  Возвращает элемент enum в соответсвии с тем, какая ошибка произошла или её не было
      */
-    Uart::errorUart getError();
+    Uart::errorUart getError ();
  
 };
 

@@ -1,6 +1,6 @@
 #include "../../include/cross_platform/crypt.h"
 
-void create_hash(char *msg, size_t len,char* hex) 
+void create_hash (char *msg, size_t len,char* hex) 
 {
    size_t i;
    int j;
@@ -42,7 +42,7 @@ void create_hash(char *msg, size_t len,char* hex)
    hh[0], hh[1], hh[2], hh[3], hh[4], hh[5], hh[6], hh[7]);   
 }
 
-bool compare_hash(char* h1,char* h2)
+bool compare_hash (char* h1, char* h2)
 {
    int i = 0;
    while (i<16)

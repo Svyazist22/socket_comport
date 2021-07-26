@@ -9,67 +9,67 @@
 
 #include "../../../include/linux/transport_layer/server.h"
 
-void Server::serv_init()
+void Server::serv_init ()
 {
     Logger logger;
     
     // Создаем сокет сокет-дескриптор
-    sd = socket(AF_INET,SOCK_STREAM,0); //ipv4 tsp
-    if (sd ==-1)
+    sd = socket(AF_INET, SOCK_STREAM, 0); //ipv4 tsp
+    if (sd == -1)
     {
-        logger.err("Error create socket: %s",strerror(errno));
+        logger.err("Error create socket: %s", strerror (errno));
         exit(0);
     }
     
     struct sockaddr_in serv_addr = {0};
     serv_addr.sin_family = AF_INET; 
     // serv_addr.sin_addr.s_addr = inet_addr("");
-    serv_addr.sin_port = htons(PORT); //порт 64300
+    serv_addr.sin_port = htons (PORT); //порт 64300
 
     // Связываем сокет с конкретным адресом
-    bind_serv = bind(sd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)); 
+    bind_serv = bind (sd, (struct sockaddr *)&serv_addr, sizeof (serv_addr)); 
     if (bind_serv ==-1)
     {
-        logger.err("Error create bind: %s",strerror(errno));
+        logger.err ("Error create bind: %s", strerror (errno));
         exit(0);
     }
 
     // Слушаем конкретный сокет
-    listen_serv = listen(sd,5);
-    if (listen_serv ==-1)
+    listen_serv = listen (sd, 5);
+    if (listen_serv == -1)
     {
-        logger.err("Error listen: %s",strerror(errno));
-        exit(0);
+        logger.err("Error listen: %s", strerror (errno));
+        exit (0);
     }
 
     struct sockaddr_in client_addr;
-    socklen_t length = sizeof(client_addr);
+    socklen_t length = sizeof (client_addr);
 
     // Принятие связи на сокет. Возвращает новый сокет-дескриптор, через который происходит 
     //общение клиента с сервером
-    accept_serv = accept(sd,(struct sockaddr*)&client_addr,&length);
-    if (accept_serv ==-1)
-    {
-        logger.err("Error accept: %s",strerror(errno));
-        exit(0);
+    accept_serv = accept (sd,(struct sockaddr*)&client_addr, &length);
+    if (accept_serv == -1)
+    { 
+        logger.err ("Error accept: %s", strerror (errno));
+        exit (0);
     }
 }
 
-char* Server::serv_read()
+char* Server::serv_read ()
 {
     Logger logger;
     char *buf = new char[1024];
     ssize_t nread = 0;
 
-    nread = recv(accept_serv,buf,1024,0);
+    nread = recv (accept_serv, buf, 1024, 0);
 
     return buf;
 }
 
-void Server::serv_stop()
+void Server::serv_stop ()
 {
-    close(accept_serv);
-    close(sd);
+    close (accept_serv);
+    close (sd);
 }
 
 

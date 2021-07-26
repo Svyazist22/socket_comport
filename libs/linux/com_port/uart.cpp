@@ -48,7 +48,7 @@ void Uart::uartInit (int fd){
     setResult = tcsetattr (fd, TCSANOW, &tty);
 }
 
-void Uart::uartReceive(int fd, fifo_t *buf)
+void Uart::uartReceive (int fd, fifo_t *buf)
 {
     char response[1024];
     memset(response, '\0', sizeof (response));
@@ -80,7 +80,7 @@ void Uart::uartTransmit (int fd, char* str, size_t size)
     }
 }
 
-int Uart::uartFd()
+int Uart::uartFd ()
 {
     int fd = -1;
     char addr[64] = "/dev/ttyUSB0"; // Стандартный путь до компорта
@@ -88,7 +88,7 @@ int Uart::uartFd()
 
     while (1)
     {
-        fd = open(addr,O_RDWR);
+        fd = open (addr,O_RDWR);
         if (fd > 0)
         {
             break;
@@ -123,7 +123,7 @@ int Uart::uartFd()
     return fd;
 }
 
-Uart::errorUart Uart::getError()
+Uart::errorUart Uart::getError ()
 {
     if (setResult < 0)
     {

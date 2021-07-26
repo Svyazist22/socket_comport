@@ -37,13 +37,13 @@ void Client::clientStop()
     close(sd);
 }
 
-Client::errorClient Client::getError()
+Client::errorClient Client::getError ()
 {
-    if (sd ==-1)
+    if (sd == -1)
     {
         return errSd; 
     } 
-    else if (connectClient ==-1)
+    else if (connectClient == -1)
     {
         return errConn;
     }
