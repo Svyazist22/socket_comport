@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int main(int argc, char const *argv[])
+int main (int argc, char const *argv[])
 {
     Server serv;
     Uart uart;
@@ -30,25 +30,25 @@ int main(int argc, char const *argv[])
     serv.serv_init(); 
 
     //Инициализация компорта
-    uart.uartInit(fd); 
+    uart.uartInit (fd); 
 
     while(1)
     {
         buf = serv.serv_read();                     // Получаем сообщение от клиента
         
         // Команда остановки программ
-        if (strcmp(buf,"stop")==0)
+        if (strcmp (buf, "stop") == 0)
         {   
             delete [] buf;
             serv.serv_stop();
-            log.err("The program is stopped!");
+            log.err ("The program is stopped!");
             return 0;
         }
 
-        if (strlen(buf)>0)
+        if (strlen (buf) > 0)
         {
-            log.info("Message received:%s",buf); 
-            uart.uartTransmit(fd,buf,strlen(buf)); //Отправляем на компорт
+            log.info ("Message received:%s",buf); 
+            uart.uartTransmit (fd, buf, strlen (buf)); //Отправляем на компорт
         }
     }
     
