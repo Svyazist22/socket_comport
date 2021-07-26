@@ -86,15 +86,10 @@ int Uart::uartFd ()
     char addr[64] = "/dev/ttyUSB0"; // Стандартный путь до компорта
     char command;                   // Команда с консоли при ошибке
 
-    while (1)
+    while (fd < 0)
     {
         fd = open (addr,O_RDWR);
-        if (fd > 0)
-        {
-            break;
-        }
-        else
-        {
+     
             logg.err ("Open ERROR %s: %s", addr, strerror (errno));
             printf ("You can (r)epeat, (w)rite new addres, (c)lose programm:");
             command = '\0';
@@ -103,12 +98,12 @@ int Uart::uartFd ()
             switch (command)
             {
             case 'r':               // Повторить открытие                  
-                break;
+                continue;
 
             case 'w':               // Ввести новый адрес                     
             printf ("Addres (ex.:/dev/ttyUSB0):");
             std::cin >> addr;
-                break;
+                continue;
 
             case 'c':               // Завершить программу
                 exit (EXIT_FAILURE);
@@ -118,7 +113,6 @@ int Uart::uartFd ()
                 exit (EXIT_FAILURE);
                 break;
             }
-        }
     }
     return fd;
 }
@@ -133,4 +127,5 @@ Uart::errorUart Uart::getError ()
     {
         return errNo;
     }
+    
 }
