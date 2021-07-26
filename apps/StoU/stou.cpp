@@ -6,11 +6,11 @@
  * @date 2021-07-06
  */
 
-#include "../../include/app/stou.h"
-
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
+
+#include "../../include/app/stou.h"
 
 int main (int argc, char const *argv[])
 {
